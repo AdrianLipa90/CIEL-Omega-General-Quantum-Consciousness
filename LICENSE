@@ -1,6 +1,83 @@
-MIT License
+CIEL Research Non-Commercial License v1.1
+SPDX-License-Identifier: CIEL-Research-NonCommercial-1.1
 
 Copyright (c) 2025 Adrian Lipa
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-...
+1. Definitions
+1.1 “Licensor” means the copyright holder(s) listed above.
+1.2 “Software” means this codebase and accompanying documentation.
+1.3 “Academic/Public Institution” means an accredited university, college, public research institute,
+    non-profit research organization, or government/public sector entity.
+1.4 “Non-Commercial Use” means any use not intended for or directed toward commercial advantage
+    or monetary compensation.
+1.5 “Commercial Use” means any use by a for-profit entity or use intended for or directed toward
+    commercial advantage or monetary compensation, including (without limitation) providing paid
+    services, operating the Software in production for customers or users, Software-as-a-Service (SaaS),
+    embedding in commercial products, internal production deployments that support revenue-generating
+    activities, and distribution to third parties for such uses.
+1.6 “Military/Defense Entity” means any armed forces, intelligence service, defense ministry/agency,
+    military academy, or defense contractor/subcontractor.
+1.7 “Offensive Use” means use that directly enables, targets, plans, executes, or optimizes armed
+    attack, kinetic or cyber offense, targeting/strike systems, weapon guidance, lethal autonomous
+    weapons, or surveillance aimed at facilitating harm in conflict. Illustrative examples include but
+    are not limited to: fire control, target acquisition/selection, battle damage assessment for ongoing
+    strikes, offensive EW/ES, malware C2 for intrusion/attack, and predictive models to select targets.
+
+2. Grant of Rights (Non-Commercial)
+Subject to this license, Licensor grants you a worldwide, royalty-free, non-exclusive, non-transferable
+license to use, copy, modify, create derivative works of, and distribute the Software solely for
+Non-Commercial Use and in accordance with Sections 3–6.
+
+3. Academic/Public Exemption (Non-Commercial)
+Academic/Public Institutions may use, modify, internally deploy, and distribute the Software and
+derivatives for research, teaching, and public-interest projects without charge and without further
+permission, provided such use is Non-Commercial and complies with Section 5 (Ethical Restrictions).
+
+4. Commercial Use Requires Separate License
+Any Commercial Use requires a separate written commercial license from Licensor. Without such
+license, Commercial Use is prohibited. Contact: licensing@your-domain.example.
+
+5. Ethical Restrictions (No Offensive or Harmful Use)
+5.1 Offensive Use Prohibited. Offensive Use of the Software is prohibited by all parties.
+5.2 Military/Defense Ban on Offensive Use. Military/Defense Entities are expressly prohibited from
+     Offensive Use. This applies regardless of commercial or non-commercial context.
+5.3 Examples of allowed non-offensive public-interest uses include: disaster response, search and
+     rescue, humanitarian logistics, medical triage, demining/UXO clearance, defensive cybersecurity
+     (intrusion detection/monitoring without offensive payload development), and safety research.
+     These examples must remain Non-Commercial under this license.
+5.4 If your use plausibly contributes to offensive operations or harm as above, you must not use the
+     Software under this license.
+
+6. Redistribution Conditions (Non-Commercial)
+Redistributions in source or binary form must (a) retain this license text and copyright notice;
+(b) clearly state any material changes; and (c) not misrepresent derivative works as the original.
+
+7. No Trademark Rights
+This license does not grant rights to use Licensor’s names, logos, or trademarks.
+
+8. No Patent License
+No patent rights are granted, whether express or implied (including by estoppel or exhaustion).
+If you require patent rights, obtain a separate license from Licensor.
+
+9. Warranty Disclaimer
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, AND NON-INFRINGEMENT.
+
+10. Limitation of Liability
+IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER
+IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM OR IN CONNECTION WITH THE SOFTWARE OR THIS LICENSE.
+
+11. Termination
+This license terminates automatically upon breach (including Sections 4–5). Upon termination, you must
+cease use and distribution; past recipients who remain in compliance retain their rights. Licensor may
+offer reinstatement at its sole discretion.
+
+12. Contributions (Inbound = Outbound)
+Unless you state otherwise in writing, any contribution you submit is licensed to Licensor under this
+same license.
+
+13. Severability and No Waiver
+If any provision is unenforceable, the remainder remains in effect. No term is waived by failure to enforce it.
+
+For commercial licensing or clarifications: licensing@your-domain.example
