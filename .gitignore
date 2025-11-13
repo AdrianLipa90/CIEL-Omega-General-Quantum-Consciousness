@@ -8,3 +8,4 @@ dist/
 build/
 .env
 .ipynb_checkpoints/
+CIEL_MEMORY_SYSTEM/
