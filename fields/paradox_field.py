@@ -1,4 +1,7 @@
-# auto-generated wrapper (no placeholders)
+"""Compatibility import for the paradox operators."""
 
-from ..ext.paradoxes import UltimateParadoxOperators
-__all__ = ['UltimateParadoxOperators']
+from __future__ import annotations
+
+from paradoxes.ultimate_operators import UltimateParadoxOperators
+
+__all__ = ["UltimateParadoxOperators"]

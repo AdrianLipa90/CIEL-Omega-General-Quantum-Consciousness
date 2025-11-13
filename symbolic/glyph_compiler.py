@@ -1,4 +1,15 @@
-# auto-generated wrapper (no placeholders)
+"""Compile glyph interpretations into executable instructions."""
 
-from ..ext.extfwcku import GlyphCompiler
-__all__ = ['GlyphCompiler']
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Iterable, List
+
+
+@dataclass(slots=True)
+class GlyphCompiler:
+    def compile(self, glyphs: Iterable[str]) -> str:
+        return "\n".join(glyphs)
+
+
+__all__ = ["GlyphCompiler"]

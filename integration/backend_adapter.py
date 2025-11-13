@@ -1,4 +1,19 @@
-# auto-generated wrapper (no placeholders)
+"""Tiny backend adapter orchestrating capture of metrics."""
 
-from ..ext.ext20 import BackendAdapter
-__all__ = ['BackendAdapter']
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Callable, Dict, Any
+
+
+@dataclass(slots=True)
+class BackendAdapter:
+    collector: Callable[[], Dict[str, Any]]
+    last_payload: Dict[str, Any] = field(default_factory=dict, init=False)
+
+    def run(self) -> Dict[str, Any]:
+        self.last_payload = self.collector()
+        return self.last_payload
+
+
+__all__ = ["BackendAdapter"]

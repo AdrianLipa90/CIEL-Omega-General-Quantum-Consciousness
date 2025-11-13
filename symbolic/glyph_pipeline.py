@@ -1,4 +1,21 @@
-# auto-generated wrapper (no placeholders)
+"""Pipeline combining loading and interpreting glyph data."""
 
-from ..ext.ext8 import GlyphPipeline
-__all__ = ['GlyphPipeline']
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Iterable, List
+
+from .glyph_loader import CVOSDatasetLoader
+from .glyph_interpreter import GlyphNodeInterpreter
+
+
+@dataclass(slots=True)
+class GlyphPipeline:
+    loader: CVOSDatasetLoader
+    interpreter: GlyphNodeInterpreter = field(default_factory=GlyphNodeInterpreter)
+
+    def run(self) -> List[str]:
+        return [self.interpreter.interpret(g) for g in self.loader.load()]
+
+
+__all__ = ["GlyphPipeline"]
