@@ -1,4 +1,26 @@
-# auto-generated wrapper (no placeholders)
+"""Ethical memory logger."""
 
-from ..ext.ext3 import EthicsLogger
-__all__ = ['EthicsLogger']
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Dict, Any
+
+import json
+import time
+
+
+@dataclass(slots=True)
+class EthicsLogger:
+    path: Path
+    history: list[Dict[str, Any]] = field(default_factory=list, init=False, repr=False)
+
+    def record(self, entry: Dict[str, Any]) -> None:
+        payload = dict(entry, timestamp=time.time())
+        self.history.append(payload)
+        Path(self.path).parent.mkdir(parents=True, exist_ok=True)
+        with Path(self.path).open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(payload, ensure_ascii=False) + "\n")
+
+
+__all__ = ["EthicsLogger"]

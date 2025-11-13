@@ -1,6 +1,6 @@
-def prefilter(data):
-    if data is None: return None
-    if isinstance(data,str):
-        s=data.strip()
-        return s if s else None
-    return data
+"""Compatibility shim for the prefilter helper."""
+from __future__ import annotations
+
+from tmp.prefilter import prefilter
+
+__all__ = ["prefilter"]

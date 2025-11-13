@@ -1,4 +1,4 @@
-# auto-generated wrapper (no placeholders)
+"""Translate EEG like traces into the emotional feature space."""
 
 from ext.ext9 import EEGEmotionMapper
 

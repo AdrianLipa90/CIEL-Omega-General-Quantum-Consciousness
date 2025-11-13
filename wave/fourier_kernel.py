@@ -1,4 +1,4 @@
-# auto-generated wrapper (no placeholders)
+"""Fourier based consciousness kernel."""
 
 from ext.extfwcku import SpectralWaveField12D
 

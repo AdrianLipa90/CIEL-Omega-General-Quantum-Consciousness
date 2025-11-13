@@ -1,4 +1,4 @@
-# auto-generated wrapper (no placeholders)
+"""Phase drift core synchronised with the Schumann clock."""
 
 from ext.ext17 import OmegaDriftCore
 
