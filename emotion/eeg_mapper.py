@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable, List
 
+from .utils import fractional_distribution, to_signal_list
+
 
 @dataclass(slots=True)
 class EEGEmotionMapper:
@@ -15,10 +17,8 @@ class EEGEmotionMapper:
             self.bands = ["delta", "theta", "alpha", "beta", "gamma"]
 
     def map(self, signal: Iterable[float]) -> dict[str, float]:
-        values = list(signal)
-        total = sum(values) or 1.0
-        fractions = {band: values[i % len(values)] / total for i, band in enumerate(self.bands)}
-        return fractions
+        values = to_signal_list(signal)
+        return fractional_distribution(values, self.bands)
 
 
 __all__ = ["EEGEmotionMapper"]
