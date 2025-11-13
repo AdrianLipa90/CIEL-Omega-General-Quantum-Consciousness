@@ -53,21 +53,16 @@ def fractional_distribution(values: Sequence[float], labels: Sequence[str]) -> d
 
     The helper pads or truncates the source ``values`` so it gracefully handles
     signals that do not perfectly match the set of EEG bands used in the tests.
-    Negative values are converted to their absolute magnitude so callers can
-    provide pre-processed FFT outputs without worrying about sign conventions.
     """
 
     if not labels:
         return {}
 
-    counts = [abs(float(value)) for value in values if value is not None]
-    counts = counts or [1.0]
-
-    expanded = [counts[i % len(counts)] for i in range(len(labels))]
-    total = sum(expanded) or 1.0
-
+    # Ensure we always have at least one divisor and avoid division by zero.
+    total = float(sum(values)) or 1.0
+    counts = list(values) or [1.0]
     return {
-        band: expanded[i] / total
+        band: counts[i % len(counts)] / total
         for i, band in enumerate(labels)
     }
 

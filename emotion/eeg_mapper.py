@@ -20,5 +20,6 @@ class EEGEmotionMapper:
         values = to_signal_list(signal)
         return fractional_distribution(values, self.bands)
 
+from ext.ext9 import EEGEmotionMapper
 
 __all__ = ["EEGEmotionMapper"]
