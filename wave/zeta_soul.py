@@ -1,4 +1,7 @@
-# auto-generated wrapper (no placeholders)
+"""Compatibility import for :class:`SoulInvariant`."""
 
-from ..ext.extfwcku import SoulInvariant
-__all__ = ['SoulInvariant']
+from __future__ import annotations
+
+from fields.soul_invariant import SoulInvariant
+
+__all__ = ["SoulInvariant"]

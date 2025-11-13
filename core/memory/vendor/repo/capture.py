@@ -1,13 +1,6 @@
-from datetime import datetime
-from typing import Any, Dict
+"""Compatibility shim for capture helpers."""
+from __future__ import annotations
 
-def capture(data: Any, source: str = "user", channel: str = "text") -> Dict:
-    """Capture raw input with minimal, immutable metadata."""
-    return {
-        "data": data,
-        "meta": {
-            "source": source,
-            "channel": channel,
-            "timestamp": datetime.utcnow().isoformat(timespec='seconds'),
-        }
-    }
+from tmp.capture import capture
+
+__all__ = ["capture"]
