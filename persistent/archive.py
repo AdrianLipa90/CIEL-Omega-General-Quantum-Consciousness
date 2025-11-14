@@ -1,4 +1,10 @@
-"""Utilities for rotating temporary TMP reports."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Utilities for rotating temporary TMP reports.
+"""
 from __future__ import annotations
 
 import shutil
