@@ -9,6 +9,7 @@ import numpy as np
 
 from evolution.omega_drift import OmegaDriftCore
 from evolution.schumann_clock import SchumannClock
+from mathematics.safe_operations import heisenberg_soft_clip_range
 
 
 @dataclass(slots=True)
@@ -21,7 +22,13 @@ class OmegaBootRitual:
         state = psi.astype(complex)
         for _ in range(self.steps):
             state = self.drift.step(state, sigma)
-            sigma = float(np.clip(np.mean(np.abs(state) ** 2), 0.0, 1.2))
+            sigma = float(
+                heisenberg_soft_clip_range(
+                    np.mean(np.abs(state) ** 2),
+                    0.0,
+                    1.2,
+                )
+            )
         return {"psi": state, "sigma": sigma}
 
 

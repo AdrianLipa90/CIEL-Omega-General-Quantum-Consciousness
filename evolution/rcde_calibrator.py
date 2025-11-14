@@ -6,6 +6,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from mathematics.safe_operations import heisenberg_soft_clip_range
+
 
 def _energy(field: np.ndarray) -> float:
     return float(np.mean(np.abs(field) ** 2))
@@ -20,7 +22,7 @@ class RCDECalibrator:
     def step(self, psi: np.ndarray) -> float:
         target = _energy(psi)
         self.sigma = float(self.sigma + self.dt * self.lam * (target - self.sigma))
-        self.sigma = float(np.clip(self.sigma, 0.0, 1.5))
+        self.sigma = float(heisenberg_soft_clip_range(self.sigma, 0.0, 1.5))
         return self.sigma
 
 

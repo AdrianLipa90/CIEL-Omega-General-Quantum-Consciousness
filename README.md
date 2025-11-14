@@ -27,6 +27,16 @@ memory) while avoiding the heavyweight vendor dependencies.  See `tests/test_inf
 for usage examples.
 
 
+## Heisenberg Soft Clip Operator
+
+Numerical safeguards that previously relied on hard `numpy.clip` calls now delegate to the
+`mathematics.safe_operations.heisenberg_soft_clip*` helpers.  The Heisenberg-inspired saturation
+keeps small amplitudes perfectly linear while smoothly approaching the configured limits for large
+values.  The behaviour mirrors the repository narrative: pushing an observable harder increases the
+uncertainty instead of snapping to an abrupt bound.  See `tests/test_soft_clip.py` for the sanity
+checks that cover both the symmetric and ranged variants.
+
+
 ## Memory Vendor Selector
 All user memory modules are bundled under `core/memory/vendor/{ultimate,pro,repo}`.
 Wrappers in `core/memory/*.py` import from a selected vendor via env var:

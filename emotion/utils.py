@@ -10,6 +10,10 @@ from __future__ import annotations
 
 from typing import Iterable, List, Sequence, Tuple
 
+import numpy as np
+
+from mathematics.safe_operations import heisenberg_soft_clip
+
 
 def to_signal_list(signal: Iterable[float]) -> List[float]:
     """Coerce an arbitrary iterable of numbers into a concrete ``list``.
@@ -48,7 +52,12 @@ def mean_and_variance(values: Sequence[float], *, baseline: float = 0.0) -> Tupl
     return mean, variance
 
 
-def fractional_distribution(values: Sequence[float], labels: Sequence[str]) -> dict[str, float]:
+def fractional_distribution(
+    values: Sequence[float],
+    labels: Sequence[str],
+    *,
+    softness: float = 4.0,
+) -> dict[str, float]:
     """Return a normalised fractional distribution indexed by ``labels``.
 
     The helper pads or truncates the source ``values`` so it gracefully handles
@@ -63,11 +72,22 @@ def fractional_distribution(values: Sequence[float], labels: Sequence[str]) -> d
     counts = [abs(float(value)) for value in values if value is not None]
     counts = counts or [1.0]
 
-    expanded = [counts[i % len(counts)] for i in range(len(labels))]
-    total = sum(expanded) or 1.0
+    expanded = np.array([counts[i % len(counts)] for i in range(len(labels))], dtype=float)
+
+    sigma = float(np.std(expanded))
+    if sigma == 0.0:
+        sigma = float(np.max(np.abs(expanded)) or 1.0)
+
+    scale = max(softness * sigma, 1e-6)
+    softened = np.abs(expanded)
+    mask = np.abs(expanded) > scale
+    if np.any(mask):
+        softened = softened.copy()
+        softened[mask] = np.abs(heisenberg_soft_clip(expanded[mask], scale))
+    total = float(np.sum(softened)) or 1.0
 
     return {
-        band: expanded[i] / total
+        band: float(softened[i] / total)
         for i, band in enumerate(labels)
     }
 
