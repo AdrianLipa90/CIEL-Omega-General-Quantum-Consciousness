@@ -1,4 +1,9 @@
-"""High level helper describing an intention field.
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+High level helper describing an intention field.
 
 The class provides a very small API that is sufficient for all existing import
 sites.  It exposes deterministic behaviour that can be validated in tests while
