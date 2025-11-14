@@ -1,4 +1,10 @@
-"""Translate EEG like traces into the emotional feature space."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Translate EEG like traces into the emotional feature space.
+"""
 
 from __future__ import annotations
 
