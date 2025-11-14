@@ -12,3 +12,7 @@
 
 The pipeline exposes a single `step(signal)` method that returns the stored entry.  See
 `tests/test_information_flow.py` for an executable example.
+
+> **License notice**: Modules participating in the pipeline carry the CIEL Research Non-Commercial License
+> v1.1 header with Adrian Lipa / Intention Lab attribution.  Retain the header when extending the flow and
+> reference the top-level `LICENSE` document for obligations and permitted usage.
