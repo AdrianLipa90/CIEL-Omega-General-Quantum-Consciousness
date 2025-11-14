@@ -3,7 +3,7 @@
 Copyright (c) 2025 Adrian Lipa / Intention Lab
 Licensed under the CIEL Research Non-Commercial License v1.1.
 
-Receiver translating crystal vibrations into the intention space.
+Pre-process EEG traces for the rest of the pipeline.
 """
 
 from __future__ import annotations
@@ -13,18 +13,19 @@ from typing import Iterable
 
 import numpy as np
 
-from fields.intention_field import IntentionField
-
 
 @dataclass(slots=True)
-class CrystalFieldReceiver:
-    intention: IntentionField
+class EEGProcessor:
+    sample_rate: float = 128.0
 
-    def receive(self, vibration: Iterable[float]) -> np.ndarray:
-        vec = np.fromiter(vibration, dtype=float)
-        if vec.size == 0:
-            return self.intention.generate()
-        return self.intention.generate() + vec / (np.linalg.norm(vec) or 1.0)
+    def filter(self, signal: Iterable[float]) -> np.ndarray:
+        values = np.fromiter(signal, dtype=float)
+        if values.size == 0:
+            return values
+        freqs = np.fft.rfftfreq(values.size, d=1.0 / self.sample_rate)
+        spectrum = np.fft.rfft(values)
+        spectrum[freqs > 40.0] = 0.0
+        return np.fft.irfft(spectrum, n=values.size)
 
 
-__all__ = ["CrystalFieldReceiver"]
+__all__ = ["EEGProcessor"]
