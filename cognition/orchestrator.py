@@ -3,7 +3,8 @@
 Copyright (c) 2025 Adrian Lipa / Intention Lab
 Licensed under the CIEL Research Non-Commercial License v1.1.
 
-Glue logic combining cognition submodules."""
+Glue logic combining cognition submodules.
+"""
 
 from __future__ import annotations
 
