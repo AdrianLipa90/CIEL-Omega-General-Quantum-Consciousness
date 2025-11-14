@@ -7,5 +7,5 @@ setup(
     install_requires=["numpy", "scipy", "matplotlib", "networkx", "sympy", "pandas"],
     description="CIEL — Consciousness-Integrated Emergent Logic (organized from project drafts)",
     author="Adrian Lipa",
-    license="MIT",
+    license="CIEL-Research-NonCommercial-1.1",
 )

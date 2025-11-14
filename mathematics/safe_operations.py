@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import deque
 from typing import Iterable
 
 import numpy as np
@@ -55,3 +56,44 @@ __all__ = [
     "heisenberg_soft_clip",
     "heisenberg_soft_clip_range",
 ]
+
+
+class HeisenbergSoftClipper:
+    """Stateful helper mirroring the non-linear saturation operator."""
+
+    __slots__ = ("k_sigma", "history_limit", "_scales")
+
+    def __init__(self, *, k_sigma: float = 2.0, history_limit: int = 128) -> None:
+        self.k_sigma = float(k_sigma)
+        self.history_limit = int(history_limit)
+        self._scales: deque[float] = deque(maxlen=self.history_limit)
+
+    def __call__(self, x: np.ndarray | float, scale: float | None = None) -> np.ndarray:
+        arr = np.asarray(x, dtype=float)
+        if scale is None:
+            sigma = float(np.std(arr))
+            if sigma == 0.0:
+                sigma = float(np.max(np.abs(arr)) or 1.0)
+            scale = max(self.k_sigma * sigma, 1e-12)
+        result = heisenberg_soft_clip(arr, scale=float(scale))
+        self._scales.append(float(scale))
+        return result
+
+    @property
+    def last_scale(self) -> float:
+        """Return the most recent uncertainty radius used by the clipper."""
+
+        if not self._scales:
+            return 0.0
+        return float(self._scales[-1])
+
+    @property
+    def average_scale(self) -> float:
+        """Return the rolling mean of the captured scales."""
+
+        if not self._scales:
+            return 0.0
+        return float(np.mean(self._scales))
+
+
+__all__.append("HeisenbergSoftClipper")

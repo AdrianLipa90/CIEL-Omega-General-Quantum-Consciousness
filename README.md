@@ -37,6 +37,16 @@ uncertainty instead of snapping to an abrupt bound.  See `tests/test_soft_clip.p
 checks that cover both the symmetric and ranged variants.
 
 
+## Fourier Wave Consciousness Kernel
+
+`wave.fourier_kernel.FourierWaveConsciousnessKernel12D` combines the curated intention, emotion,
+resonance and soul primitives into a deterministic twelve-channel simulation.  The helper exposes a
+`simulate` method that soft-saturates incoming signals using the Heisenberg operator, projects them
+into EEG-like bands, updates the resonance tensor and summarises the soul invariant.  The
+`report()` API returns a compact summary with the dominant band, coherence level and history depth so
+tests can verify the end-to-end flow.  See `tests/test_fourier_kernel.py` for an executable example.
+
+
 ## Memory Vendor Selector
 All user memory modules are bundled under `core/memory/vendor/{ultimate,pro,repo}`.
 Wrappers in `core/memory/*.py` import from a selected vendor via env var:
