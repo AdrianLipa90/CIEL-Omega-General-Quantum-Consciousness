@@ -3,7 +3,8 @@
 Copyright (c) 2025 Adrian Lipa / Intention Lab
 Licensed under the CIEL Research Non-Commercial License v1.1.
 
-Compatibility shim for heuristic checks."""
+Compatibility shim for heuristic checks.
+"""
 from __future__ import annotations
 
 from tmp.heuristics import Heuristics
