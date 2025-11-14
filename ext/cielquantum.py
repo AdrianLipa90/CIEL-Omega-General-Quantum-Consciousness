@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 CIEL/0 – Quantum-Relativistic Reality Kernel
 Complete Quantized Reality Framework - Merge Implementation
 Adrian Lipa's Theory of Everything - Full Quantization + Renormalization

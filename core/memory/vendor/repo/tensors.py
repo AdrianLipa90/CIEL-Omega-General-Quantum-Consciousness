@@ -1,4 +1,12 @@
-# Tensor-scalar encoding placeholder for features/vector
-# Converts spectral components and features into a fixed-length numeric vector.
-def encode_tensor_scalar(weight: float, G: float, M: float, tokens: int) -> list:
-    return [float(weight), float(G), float(M), float(tokens)]
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Compatibility shim for tensor encoding helpers.
+"""
+from __future__ import annotations
+
+from utils.tensors import encode_tensor_scalar
+
+__all__ = ["encode_tensor_scalar"]

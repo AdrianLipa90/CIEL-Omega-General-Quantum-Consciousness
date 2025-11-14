@@ -1,18 +1,12 @@
-from .weighting import spectral_weight, clamp, decision_thresholds
-from .policy import Policy
+"""CIEL/Ω Quantum Consciousness Suite
 
-def compute_weight(entry, features, user_subjective=0.0, self_subjective=0.0, policy:Policy=None):
-    policy = policy or Policy()
-    w, G, M = spectral_weight(entry, features, user_subjective, self_subjective, policy)
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
 
-    # context-aware tweak: boost by emotion ([-1,1] → [-0.1,+0.2]) and coherence (0..1 → [-0.1,+0.2])
-    emo = float(features.get("M",{}).get("emotion", 0.0))
-    coh = float(features.get("M",{}).get("coherence", 0.5))
-    ctx_conf = float(features.get("M",{}).get("context_conf", 0.5))
+Compatibility shim for spectral weighting helpers.
+"""
+from __future__ import annotations
 
-    emo_add = 0.2*max(0.0, emo) - 0.1*max(0.0, -emo)
-    coh_add = 0.2*coh - 0.1*(1.0 - coh)
-    ctx_add = 0.1*ctx_conf - 0.05*(1.0 - ctx_conf)
+from tmp.spectral_weighting import compute_weight
 
-    w2 = w * (1.0 + emo_add + coh_add + ctx_add)
-    return max(0.0, float(w2)), G, M, {"emo_add":emo_add, "coh_add":coh_add, "ctx_add":ctx_add}
+__all__ = ["compute_weight"]

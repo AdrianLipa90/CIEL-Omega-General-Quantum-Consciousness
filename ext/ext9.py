@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 CIEL/0 – Batch9 Patch (Emotion + Empathy + EEG→Affect + Affective Orchestration)
 Nowe elementy (bez FFT, w pełni wektoryzowane):
 - EmotionCore           → lekki rdzeń stanów emocjonalnych

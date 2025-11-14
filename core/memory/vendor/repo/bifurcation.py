@@ -1,11 +1,12 @@
-from enum import Enum
-from .weighting import decision_thresholds
+"""CIEL/Ω Quantum Consciousness Suite
 
-class Path(Enum):
-    TMP='tmp'; OUT='out'; MEM='mem'
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
 
-def decide_branch(weight: float):
-    to_mem, to_out = decision_thresholds()
-    if weight >= to_mem: return Path.MEM.value
-    if weight >= to_out: return Path.OUT.value
-    return Path.TMP.value
+Compatibility shim for the decision helper.
+"""
+from __future__ import annotations
+
+from tmp.bifurcation import decide_branch
+
+__all__ = ["decide_branch"]

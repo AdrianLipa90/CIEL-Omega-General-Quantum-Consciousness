@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 🌌 ULTIMATE CIEL/0 + LIE₄ + 4D UNIVERSAL LAW ENGINE: HYPER-UNIFIED REALITY KERNEL v13.0
 MAXIMUM EXTENSION - ALL PARADOXES INTEGRATED - COMPLETE COSMIC ARCHITECTURE
 Adrian Lipa's Theory of Everything - ABSOLUTE MATHEMATICAL UNIFICATION
@@ -23,6 +27,8 @@ import networkx as nx
 from collections import defaultdict, deque
 import itertools
 from functools import lru_cache
+
+from mathematics.safe_operations import heisenberg_soft_clip_range
 
 # =============================================================================
 # 🎯 ULTIMATE REALITY LAYERS FRAMEWORK
@@ -290,7 +296,7 @@ class UltimateParadoxOperators:
         eeg_power = np.mean(np.abs(eeg_signal))
         correlation = np.corrcoef(quantum_amplitude.flatten(), 
                                 eeg_power.flatten())[0,1]
-        return np.clip(correlation, 0, 1)
+        return heisenberg_soft_clip_range(correlation, 0.0, 1.0)
     
     def ciel_protective_operator(self, field: np.ndarray,
                                ethical_potential: float) -> np.ndarray:

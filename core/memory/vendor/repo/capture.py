@@ -1,13 +1,12 @@
-from datetime import datetime
-from typing import Any, Dict
+"""CIEL/Ω Quantum Consciousness Suite
 
-def capture(data: Any, source: str = "user", channel: str = "text") -> Dict:
-    """Capture raw input with minimal, immutable metadata."""
-    return {
-        "data": data,
-        "meta": {
-            "source": source,
-            "channel": channel,
-            "timestamp": datetime.utcnow().isoformat(timespec='seconds'),
-        }
-    }
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Compatibility shim for capture helpers.
+"""
+from __future__ import annotations
+
+from tmp.capture import capture
+
+__all__ = ["capture"]

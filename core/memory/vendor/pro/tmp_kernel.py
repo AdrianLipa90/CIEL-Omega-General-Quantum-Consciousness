@@ -1,3 +1,9 @@
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+"""
+
 from typing import Any, Dict, List, Optional
 from .si_utils import validate_timestamp
 from .spectral_multiplier import gamma_from_categories, evaluate_spectral_categories

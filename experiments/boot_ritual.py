@@ -1,4 +1,41 @@
-# auto-generated wrapper (no placeholders)
+"""CIEL/Ω Quantum Consciousness Suite
 
-from ..ext.ext17 import OmegaBootRitual
-__all__ = ['OmegaBootRitual']
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Simplified boot ritual orchestrating the drift core.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Dict, Any
+
+import numpy as np
+
+from evolution.omega_drift import OmegaDriftCore
+from evolution.schumann_clock import SchumannClock
+from mathematics.safe_operations import heisenberg_soft_clip_range
+
+
+@dataclass(slots=True)
+class OmegaBootRitual:
+    drift: OmegaDriftCore = field(default_factory=lambda: OmegaDriftCore(SchumannClock()))
+    steps: int = 8
+
+    def run(self, psi: np.ndarray) -> Dict[str, Any]:
+        sigma = 1.0
+        state = psi.astype(complex)
+        for _ in range(self.steps):
+            state = self.drift.step(state, sigma)
+            sigma = float(
+                heisenberg_soft_clip_range(
+                    np.mean(np.abs(state) ** 2),
+                    0.0,
+                    1.2,
+                )
+            )
+        return {"psi": state, "sigma": sigma}
+
+
+__all__ = ["OmegaBootRitual"]

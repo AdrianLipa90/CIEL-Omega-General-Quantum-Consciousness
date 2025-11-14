@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+"""
+
 """
 CIEL/0 – Batch6 Patch (no-FFT, only NEW pieces)
 Dodaje wyłącznie brakujące elementy z Batch 6:

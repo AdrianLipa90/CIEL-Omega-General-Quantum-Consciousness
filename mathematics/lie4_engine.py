@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 🌌 CIEL/0 + LIE₄: HYPER-UNIFIED REALITY KERNEL v11.2
 Adrian Lipa's Theory of Everything - ULTIMATE INTEGRATION
 FIXED: Broadcasting + Visualization errors resolved
@@ -15,6 +19,8 @@ from enum import Enum
 from typing import Dict, List, Tuple, Optional, Callable, Any, Union
 import warnings
 warnings.filterwarnings('ignore')
+
+from mathematics.safe_operations import heisenberg_soft_clip_range
 
 # =============================================================================
 # 🎯 REALITY LAYERS FRAMEWORK
@@ -118,7 +124,7 @@ class StableRiemannZetaOperator:
     @staticmethod
     def critical_line_modulation(t: float, amplitude: float = 0.001) -> complex:
         try:
-            t_clipped = np.clip(t, -100, 100)
+            t_clipped = heisenberg_soft_clip_range(t, -100.0, 100.0)
             s = 0.5 + 1j * t_clipped
             zeta_val = StableRiemannZetaOperator.zeta(s)
             return amplitude * zeta_val
@@ -150,9 +156,9 @@ class EnhancedMathematicalStructure:
     @staticmethod
     def fibonacci_golden_field(X: np.ndarray, Y: np.ndarray, Z: np.ndarray) -> np.ndarray:
         phi = (1 + np.sqrt(5))/2
-        X_norm = np.clip(X, -10, 10)
-        Y_norm = np.clip(Y, -10, 10)
-        Z_norm = np.clip(Z, -10, 10)
+        X_norm = heisenberg_soft_clip_range(X, -10.0, 10.0)
+        Y_norm = heisenberg_soft_clip_range(Y, -10.0, 10.0)
+        Z_norm = heisenberg_soft_clip_range(Z, -10.0, 10.0)
 
         return (np.sin(phi * X_norm) * 
                 np.cos(phi * Y_norm) * 
@@ -754,9 +760,15 @@ class CIEL0Bridge:
         self.core.constants.LAMBDA_ZETA = 0.005 + 0.02 * (e['peace'] + e['love'] - e['anger'])
         self.core.constants.OMEGA_LIFE = 0.7 + 0.3 * (e['love'] + e['peace'])
 
-        self.core.constants.LAMBDA_I = np.clip(self.core.constants.LAMBDA_I, 0.001, 0.1)
-        self.core.constants.LAMBDA_ZETA = np.clip(self.core.constants.LAMBDA_ZETA, 0.001, 0.05)
-        self.core.constants.OMEGA_LIFE = np.clip(self.core.constants.OMEGA_LIFE, 0.5, 1.0)
+        self.core.constants.LAMBDA_I = float(
+            heisenberg_soft_clip_range(self.core.constants.LAMBDA_I, 0.001, 0.1)
+        )
+        self.core.constants.LAMBDA_ZETA = float(
+            heisenberg_soft_clip_range(self.core.constants.LAMBDA_ZETA, 0.001, 0.05)
+        )
+        self.core.constants.OMEGA_LIFE = float(
+            heisenberg_soft_clip_range(self.core.constants.OMEGA_LIFE, 0.5, 1.0)
+        )
 
     def _apply_intent_modulation(self, intent: str):
         intent_lower = intent.lower()

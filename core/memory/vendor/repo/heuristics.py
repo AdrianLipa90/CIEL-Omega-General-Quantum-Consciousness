@@ -1,16 +1,12 @@
-import re, json, pathlib
+"""CIEL/Ω Quantum Consciousness Suite
 
-class Heuristics:
-    def __init__(self, policy_path='config/policies.json'):
-        p = pathlib.Path(policy_path)
-        self.conf = json.loads(p.read_text(encoding='utf-8')) if p.exists() else {}
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
 
-    def check_blockers(self, data: str):
-        if not isinstance(data, str):
-            return (False, '')
-        s = data
-        for rule in self.conf.get('immutable_rules', []):
-            if rule.get('type') == 'regex_block':
-                if re.search(rule.get('value', ''), s):
-                    return (True, rule.get('reason', 'blocked'))
-        return (False, '')
+Compatibility shim for heuristic checks.
+"""
+from __future__ import annotations
+
+from tmp.heuristics import Heuristics
+
+__all__ = ["Heuristics"]

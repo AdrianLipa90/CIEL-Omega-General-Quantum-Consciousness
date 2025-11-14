@@ -1,3 +1,9 @@
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+"""
+
 from pathlib import Path
 from ciel_memory.orchestrator import UnifiedMemoryOrchestrator
 from ciel_memory.exporter import export_raw_copy, export_jsonl, export_parquet_or_csv

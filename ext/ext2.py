@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 CIEL/0 – Batch Pack (no-FFT edition)
 Zestawiony z: Ciel CSF.txt, rcde_calibrated.py, ciel_quantum_optimiser.py,
 noweparadoxy.py, cielfullyfull.py

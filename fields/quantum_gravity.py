@@ -1,4 +1,13 @@
-# auto-generated wrapper (no placeholders)
+"""CIEL/Ω Quantum Consciousness Suite
 
-from ..ext.paradoxes import UltimateRealityLayer
-__all__ = ['UltimateRealityLayer']
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Convenience import for the paradox layer enumeration.
+"""
+
+from __future__ import annotations
+
+from paradoxes.ultimate_operators import UltimateRealityLayer
+
+__all__ = ["UltimateRealityLayer"]
