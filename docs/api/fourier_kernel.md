@@ -5,6 +5,10 @@ consciousness kernel.  The module mirrors the terminology from the archival
 notes while depending solely on the lightweight primitives that ship with this
 repository.
 
+> **License notice**: Every Python module in the active tree declares the CIEL Research Non-Commercial
+> License v1.1 header and the Adrian Lipa / Intention Lab attribution.  Keep the header intact when you
+> embed or extend the kernel; consult `LICENSE` for the complete terms.
+
 ```python
 from wave.fourier_kernel import FourierWaveConsciousnessKernel12D
 
