@@ -1,4 +1,10 @@
-"""Field level aggregation of emotional signals."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Field level aggregation of emotional signals.
+"""
 
 from __future__ import annotations
 
