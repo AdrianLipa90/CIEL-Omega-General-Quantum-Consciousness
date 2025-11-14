@@ -1,4 +1,10 @@
-"""Log JSON lines for the simulated reality state."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Log JSON lines for the simulated reality state.
+"""
 
 from __future__ import annotations
 
