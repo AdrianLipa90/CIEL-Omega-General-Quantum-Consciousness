@@ -1,4 +1,10 @@
-"""Adam-like optimiser applied to memory traces."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Adam-like optimiser applied to memory traces.
+"""
 
 from __future__ import annotations
 
