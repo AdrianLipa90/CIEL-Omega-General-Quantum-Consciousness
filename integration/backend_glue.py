@@ -1,4 +1,10 @@
-"""Back-end glue combining capture, analysis and persistence."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Back-end glue combining capture, analysis and persistence.
+"""
 
 from __future__ import annotations
 
