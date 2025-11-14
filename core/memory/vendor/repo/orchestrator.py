@@ -1,5 +1,10 @@
+"""CIEL/Ω Quantum Consciousness Suite
 
-"""Compatibility orchestrator for the open-source repo profile."""
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Compatibility orchestrator for the open-source repo profile.
+"""
 from __future__ import annotations
 
 import json
