@@ -1,4 +1,10 @@
-"""Biological forcing field based on the intention vector."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Biological forcing field based on the intention vector.
+"""
 
 from __future__ import annotations
 
