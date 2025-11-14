@@ -1,4 +1,17 @@
-# auto-generated wrapper (no placeholders)
+"""Track mission milestones."""
 
-from ..ext.ext21 import MissionTracker
-__all__ = ['MissionTracker']
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import List
+
+
+@dataclass(slots=True)
+class MissionTracker:
+    milestones: List[str] = field(default_factory=list)
+
+    def add(self, milestone: str) -> None:
+        self.milestones.append(milestone)
+
+
+__all__ = ["MissionTracker"]

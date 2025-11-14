@@ -1,3 +1,13 @@
-# Extensions Api
+# Extensions API
 
-CIEL/0 — 12D Fourier Wave Consciousness Kernel Unified implementation of: • Core regularization & Zeta–Soul Kernel • SoulInvariant & quantum measurement • SpectralWaveField12D (12-channel FFT wave solver) • WaveBit3D, ConsciousWaveBit3D, secure EEG modulation • MultiresonanceTensor, ColorOS, emotional memory • IntentionField & cognitive–physical dynamics • Lambda0Operator safety kernel & Ψ_life functional + PID • GlyphCompiler & RitualCompiler • EchoMemory & DreamMemory • MicrotubuleQNet quantum microtubule network • ΦAField2D, AetherField2D, CSFField2D classical fields • ForcingField (respiration + cardiac + spatial) • Utilities: finite differences, spectral filter, coherence, spectra • Orchestrator CIEL2DMax + FourierWaveConsciousnessKernel12D Author: Adrian Lipa
+The `ext/` directory ships the raw reference drops uploaded with the project.  They are intentionally
+kept out of the active Python package so experiments can run against the deterministic re-implementations
+under `bio/`, `emotion/`, `fields/`, `memory/`, and `integration/`.
+
+For maintained entry points see:
+
+- `fields.intention_field.IntentionField` and `fields.soul_invariant.SoulInvariant` for the core
+  field mathematics.
+- `emotion.utils` and `emotion.emotion_core` for the lightweight affective analysis helpers.
+- `integration.information_flow.InformationFlow` to observe the full EEG ➜ intention ➜ emotion ➜
+  memory pipeline without touching the archival modules.
