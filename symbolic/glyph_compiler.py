@@ -1,4 +1,10 @@
-"""Compile glyph interpretations into executable instructions."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Compile glyph interpretations into executable instructions.
+"""
 
 from __future__ import annotations
 
