@@ -1,4 +1,10 @@
-"""Collatz-Lie4 bridge toy implementation."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Collatz-Lie4 bridge toy implementation.
+"""
 
 from __future__ import annotations
 
