@@ -1,4 +1,7 @@
-# auto-generated wrapper (no placeholders)
+"""Interfaces for the consciousness scalar field (CSF)."""
 
-from ..ext.extfwcku import SoulInvariant
-__all__ = ['SoulInvariant']
+from __future__ import annotations
+
+from fields.soul_invariant import SoulInvariant
+
+__all__ = ["SoulInvariant"]
