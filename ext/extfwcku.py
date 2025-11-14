@@ -1,4 +1,10 @@
-"""Test-friendly stub for the spectral wave field module."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Test-friendly stub for the spectral wave field module.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass
