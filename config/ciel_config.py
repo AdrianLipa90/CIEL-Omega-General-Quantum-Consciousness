@@ -1,4 +1,9 @@
-"""Runtime configuration objects for the CIEL stack.
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Runtime configuration objects for the CIEL stack.
 
 The original vendor drop exposed the :class:`CielConfig` dataclass from a
 monolithic ``ext`` module.  The tests – and the rest of the package – only need
