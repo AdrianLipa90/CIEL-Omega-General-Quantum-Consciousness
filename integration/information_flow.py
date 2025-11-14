@@ -1,4 +1,9 @@
-"""High level information flow pipeline without vendor extensions.
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+High level information flow pipeline without vendor extensions.
 
 The raw `ext/` directory contains uncurated drops of the historical
 implementation.  The active codebase builds a much smaller, deterministic
