@@ -20,6 +20,8 @@ warnings.filterwarnings('ignore')
 import numpy.typing as npt
 from sympy import isprime
 
+from mathematics.safe_operations import heisenberg_soft_clip_range
+
 # =============================================================================
 # 🎯 REALITY LAYERS FRAMEWORK (PURE MATHEMATICAL)
 # =============================================================================
@@ -248,7 +250,7 @@ class CollatzTwinPrimeRhythm4D:
                         np.cos(twin_pair[1] * 0.001) * 
                         np.exp(1j * 0.01 * np.sum(coord)))
             resonance_field.flat[idx] = np.real(resonance)
-        return np.clip(resonance_field, -1, 1)
+        return heisenberg_soft_clip_range(resonance_field, -1.0, 1.0)
 
     def prime_constellation_resonance(self, coordinates: npt.NDArray) -> npt.NDArray:
         """Prime constellation resonance for 4D structure"""
@@ -481,7 +483,7 @@ class UniversalLawEngine4D:
                                  (1 + 0.1 * collatz_res) *
                                  (1 + 0.1 * twin_prime_res) *
                                  (1 + 0.05 * riemann_protection))
-            resonance_flat[i] = np.clip(universal_resonance, 0, 2)
+            resonance_flat[i] = heisenberg_soft_clip_range(universal_resonance, 0.0, 2.0)
         return resonance
 
     def cosmic_evolution_step_4d(self, dt: float = 0.01) -> Dict[str, float]:
@@ -589,7 +591,7 @@ class StableRiemannZetaOperator:
     @staticmethod
     def critical_line_modulation(t: float, amplitude: float = 0.001) -> complex:
         try:
-            t_clipped = np.clip(t, -100, 100)
+            t_clipped = heisenberg_soft_clip_range(t, -100.0, 100.0)
             s = 0.5 + 1j * t_clipped
             zeta_val = StableRiemannZetaOperator.zeta(s)
             return amplitude * zeta_val
@@ -617,9 +619,9 @@ class EnhancedMathematicalStructure:
     @staticmethod
     def fibonacci_golden_field(X: np.ndarray, Y: np.ndarray, Z: np.ndarray) -> np.ndarray:
         phi = (1 + np.sqrt(5))/2
-        X_norm = np.clip(X, -10, 10)
-        Y_norm = np.clip(Y, -10, 10)
-        Z_norm = np.clip(Z, -10, 10)
+        X_norm = heisenberg_soft_clip_range(X, -10.0, 10.0)
+        Y_norm = heisenberg_soft_clip_range(Y, -10.0, 10.0)
+        Z_norm = heisenberg_soft_clip_range(Z, -10.0, 10.0)
         return (np.sin(phi * X_norm) * 
                 np.cos(phi * Y_norm) * 
                 np.sin(phi * Z_norm))
@@ -756,7 +758,7 @@ class UnifiedSevenFundamentalFields:
 
             # POPRAWKA 4: Kontrola overflow w exp()
             def safe_exp(arg, max_arg=50):
-                arg_clipped = np.clip(np.real(arg), -max_arg, max_arg)
+                arg_clipped = heisenberg_soft_clip_range(np.real(arg), -max_arg, max_arg)
                 if np.iscomplexobj(arg):
                     imag_part = np.imag(arg)
                     return np.exp(arg_clipped) * np.exp(1j * imag_part)

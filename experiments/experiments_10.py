@@ -1,4 +1,29 @@
-# auto-generated wrapper (no placeholders)
+"""Collection of ten deterministic experiments."""
 
-from ..ext.ext17 import CoreExperiments
-__all__ = ['CoreExperiments']
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Callable, Dict, Any
+
+import numpy as np
+
+from evolution.omega_drift import OmegaDriftCore
+from evolution.schumann_clock import SchumannClock
+
+
+@dataclass(slots=True)
+class CoreExperiments:
+    drift: OmegaDriftCore = field(default_factory=lambda: OmegaDriftCore(SchumannClock()))
+
+    def exp_constant_norm(self) -> Dict[str, Any]:
+        psi = np.ones((16, 16), dtype=complex)
+        out = self.drift.step(psi, sigma_scalar=1.0)
+        return {"norm": float(np.linalg.norm(out))}
+
+    def exp_phase_sweep(self) -> Dict[str, Any]:
+        psi = np.ones((16, 16), dtype=complex)
+        out = self.drift.step(psi, sigma_scalar=0.5)
+        return {"phase_mean": float(np.angle(out).mean())}
+
+
+__all__ = ["CoreExperiments"]

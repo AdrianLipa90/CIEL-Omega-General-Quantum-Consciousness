@@ -24,6 +24,8 @@ from collections import defaultdict, deque
 import itertools
 from functools import lru_cache
 
+from mathematics.safe_operations import heisenberg_soft_clip_range
+
 # =============================================================================
 # 🎯 ULTIMATE REALITY LAYERS FRAMEWORK
 # =============================================================================
@@ -290,7 +292,7 @@ class UltimateParadoxOperators:
         eeg_power = np.mean(np.abs(eeg_signal))
         correlation = np.corrcoef(quantum_amplitude.flatten(), 
                                 eeg_power.flatten())[0,1]
-        return np.clip(correlation, 0, 1)
+        return heisenberg_soft_clip_range(correlation, 0.0, 1.0)
     
     def ciel_protective_operator(self, field: np.ndarray,
                                ethical_potential: float) -> np.ndarray:

@@ -1,4 +1,7 @@
-# auto-generated wrapper (no placeholders)
+"""Convenience import for the paradox layer enumeration."""
 
-from ..ext.paradoxes import UltimateRealityLayer
-__all__ = ['UltimateRealityLayer']
+from __future__ import annotations
+
+from paradoxes.ultimate_operators import UltimateRealityLayer
+
+__all__ = ["UltimateRealityLayer"]

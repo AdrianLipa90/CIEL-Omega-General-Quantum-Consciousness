@@ -1,4 +1,22 @@
-# auto-generated wrapper (no placeholders)
+"""Biological forcing field based on the intention vector."""
 
-from ..ext.extfwcku import IntentionField
-__all__ = ['IntentionField']
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Iterable
+
+import numpy as np
+
+from fields.intention_field import IntentionField
+
+
+@dataclass(slots=True)
+class ForcingField:
+    intention: IntentionField
+
+    def stimulate(self, signal: Iterable[float]) -> np.ndarray:
+        projection = self.intention.project(signal)
+        return self.intention.generate() * projection
+
+
+__all__ = ["ForcingField", "IntentionField"]

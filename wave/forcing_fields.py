@@ -1,4 +1,7 @@
-# auto-generated wrapper (no placeholders)
+"""Compatibility import for :class:`IntentionField`."""
 
-from ..ext.extfwcku import IntentionField
-__all__ = ['IntentionField']
+from __future__ import annotations
+
+from fields.intention_field import IntentionField
+
+__all__ = ["IntentionField"]
