@@ -10,7 +10,6 @@ emotional primitives.  Centralising the helpers keeps the behaviour aligned
 between the mapper and the core without depending on the large vendor
 extensions.
 """
-
 from __future__ import annotations
 
 from typing import Iterable, List, Sequence, Tuple
