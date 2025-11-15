@@ -1,4 +1,10 @@
-"""Generate simple TMP review reports."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Generate simple TMP review reports.
+"""
 from __future__ import annotations
 
 from datetime import date
