@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+"""
+
 from pathlib import Path
 import shutil
 out = Path("export"); out.mkdir(exist_ok=True)

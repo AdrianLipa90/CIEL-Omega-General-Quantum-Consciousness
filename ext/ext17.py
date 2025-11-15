@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 CIEL/Ω – Batch 17 (Experimental Lab: Ω-Drift + Schumann + RCDE + Micro-Tests)
 Minimalny, samowystarczalny pakiet do uruchamiania 10 eksperymentów z Explore.zip.
 Bez FFT. W pełni wektoryzowany. Gotowy do podpięcia pod wcześniejsze batch’e.

@@ -1,3 +1,9 @@
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+"""
+
 # batch20_backend_bridge.py
 # CIEL/Ω – Batch 20: Backend Bridge & Runtime Orchestrator
 # Spina: Batch17(Ω-Drift/RCDE) + Batch19(CSF2/Pamięć/Introspekcja) → backend (cielFullQuantumCore)

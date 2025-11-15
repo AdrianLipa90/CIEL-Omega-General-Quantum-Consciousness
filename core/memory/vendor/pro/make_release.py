@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+"""
+
 import hashlib, zipfile, os, pathlib
 root = pathlib.Path(__file__).resolve().parents[1]
 target = root / "CIEL-Memory-Pro-Release.zip"

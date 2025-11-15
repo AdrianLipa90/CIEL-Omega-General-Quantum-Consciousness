@@ -54,3 +54,12 @@ Wrappers in `core/memory/*.py` import from a selected vendor via env var:
 export CIEL_MEM_VENDOR=ultimate   # or pro, repo
 ```
 Defaults: orchestrator->repo, stores->ultimate, policy->ultimate.
+
+## License & Diagnostics
+
+All active Python modules now declare the canonical CIEL Research Non-Commercial License v1.1 header
+and updated copyright attribution for Adrian Lipa / Intention Lab.  The migration was accompanied by a
+full repository test sweep (`pytest`) to validate the orchestration, memory pipelines and Fourier
+kernel—see the Testing section in this README and the project documentation for reproducible
+commands.  Consumers should retain these headers in derived work and refer to `LICENSE` for the full
+terms.

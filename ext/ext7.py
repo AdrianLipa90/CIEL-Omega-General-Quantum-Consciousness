@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 CIEL/0 – Batch7 Patch (part 1)
 Zestaw trzech komponentów:
 - QuantumResonanceKernel (z ULTIMATE + QR Reality Kernel)

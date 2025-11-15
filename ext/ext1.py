@@ -1,6 +1,10 @@
 # ciel_extensions.py
 # -*- coding: utf-8 -*-
-"""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
 CIEL/0 – Minimal Extensions Pack (definitions + missing classes)
 Nie modyfikuje kernela bazowego; daje gotowe klasy i hooki do wpięcia.
 Zaprojektowane z myślą o wektoryzacji (NumPy/Numba/CuPy) i bezpieczeństwie.

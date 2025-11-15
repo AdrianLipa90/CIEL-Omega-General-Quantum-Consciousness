@@ -1,3 +1,9 @@
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+"""
+
 # batch19_csf_memory.py
 # CIEL/Ω – Batch 19: CSF2 + Pamięć/Introspekcja + ParadoxStress + Glue do backendu
 from __future__ import annotations

@@ -1,4 +1,10 @@
-"""Wave bit utilities for small three dimensional chunks."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Wave bit utilities for small three dimensional chunks.
+"""
 
 from __future__ import annotations
 

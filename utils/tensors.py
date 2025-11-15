@@ -1,4 +1,10 @@
-"""Helpers for encoding tensors in a deterministic format."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Helpers for encoding tensors in a deterministic format.
+"""
 from __future__ import annotations
 
 from typing import Iterable, List
