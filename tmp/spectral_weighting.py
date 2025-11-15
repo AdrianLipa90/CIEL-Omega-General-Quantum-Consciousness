@@ -1,4 +1,10 @@
-"""Helpers mirroring the vendor spectral weighting API."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Helpers mirroring the vendor spectral weighting API.
+"""
 from __future__ import annotations
 
 from typing import Dict, Mapping, Tuple
