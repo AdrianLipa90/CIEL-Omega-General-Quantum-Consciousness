@@ -10,6 +10,11 @@ import math
 import pytest
 
 
+import math
+
+import pytest
+
+
 def test_emotional_imports():
     from emotion.emotion_core import EmotionCore
     from emotion.eeg_mapper import EEGEmotionMapper
