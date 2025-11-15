@@ -1,4 +1,10 @@
-"""Feature extraction routines used by the simplified TMP pipeline."""
+"""CIEL/Ω Quantum Consciousness Suite
+
+Copyright (c) 2025 Adrian Lipa / Intention Lab
+Licensed under the CIEL Research Non-Commercial License v1.1.
+
+Feature extraction routines used by the simplified TMP pipeline.
+"""
 from __future__ import annotations
 
 from typing import Dict, Mapping
