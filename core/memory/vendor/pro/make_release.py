@@ -17,7 +17,6 @@ with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as z:
     for f in ["pyproject.toml", "README.md", "LICENSE"]:
         z.write(root / f, f)
 sha = hashlib.sha256(target.read_bytes()).hexdigest()
-(root / "SHA256.txt").write_text(f"{sha}  {target.name}
-")
+(root / "SHA256.txt").write_text(f"{sha}  {target.name}\n")
 print("Release:", target)
 print("SHA256:", sha)
