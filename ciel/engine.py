@@ -1,32 +1,26 @@
 """High-level orchestration facade for the CIEL stack.
 
-The :class:`CielEngine` glues together the curated components exposed across
-configuration, wave simulation, cognition, affective processing, and memory
-coordination.  The class keeps behaviour deterministic and compositional by
-delegating all heavy lifting to the underlying modules.
+The :class:`CielEngine` composes the curated components across configuration,
+wave simulation, cognition, affective processing, and memory coordination.
+Behaviour remains deterministic and compositional by delegating work to the
+underlying modules and returning a structured diagnostic payload.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, Iterable, Sequence
+from typing import Any, Dict, List
 
-import numpy as np
+import logging
 
-from cognition.orchestrator import CognitionOrchestrator
 from config.ciel_config import CielConfig
 from config.simulation_config import IntentionField
-from emotion.affective_orchestrator import AffectiveOrchestrator
 from wave.fourier_kernel import SpectralWaveField12D
+from core.memory.orchestrator import UnifiedMemoryOrchestrator
+from cognition.orchestrator import CognitionOrchestrator
+from emotion.affective_orchestrator import AffectiveOrchestrator
 
-try:
-    from core.memory.orchestrator import UnifiedMemoryOrchestrator
-except ImportError:  # pragma: no cover - repo profile uses vendor repo orchestrator
-    from ciel_memory.orchestrator import UnifiedMemoryOrchestrator
-
-
-def _as_list(values: Iterable[float]) -> list[float]:
-    return [float(v) for v in values]
+log = logging.getLogger("CIEL.Engine")
 
 
 @dataclass(slots=True)
@@ -34,52 +28,77 @@ class CielEngine:
     """Compose the primary orchestrators into a single callable engine."""
 
     config: CielConfig = field(default_factory=CielConfig)
-    intention: IntentionField = field(default_factory=lambda: IntentionField(seed=0))
-    wave: SpectralWaveField12D = field(default_factory=SpectralWaveField12D)
+    intention: IntentionField = field(default_factory=IntentionField)
+    kernel: SpectralWaveField12D = field(default_factory=SpectralWaveField12D)
     memory: UnifiedMemoryOrchestrator = field(default_factory=UnifiedMemoryOrchestrator)
     cognition: CognitionOrchestrator = field(default_factory=CognitionOrchestrator)
-    affective: AffectiveOrchestrator = field(default_factory=AffectiveOrchestrator)
+    affect: AffectiveOrchestrator = field(default_factory=AffectiveOrchestrator)
 
-    def process(self, signal: Sequence[float] | None = None) -> Dict[str, Any]:
-        """Run a full pipeline over the provided *signal* and return diagnostics."""
+    def boot(self) -> None:
+        """Initialise the engine (placeholder for future lifecycle hooks)."""
 
-        field, time_axis = self.wave.synthesise(signal)
-        intention_vector = self.intention.generate()
+        log.info("Booting CIEL Engine")
+
+    def shutdown(self) -> None:
+        """Tear down the engine (placeholder for future lifecycle hooks)."""
+
+        log.info("Shutting down CIEL Engine")
+
+    def step(self, text: str, *, context: str = "dialogue") -> Dict[str, object]:
+        """Run a single processing step over the provided text input."""
+
+        cleaned = (text or "").strip()
+        if not cleaned:
+            return {"status": "empty"}
+
+        intention_vector = self._intention_to_list(self.intention.generate())
+        simulation = self._run_kernel(intention_vector)
+
+        D = self.memory.capture(context=context, sense=cleaned)
+        tmp_out = self.memory.run_tmp(D)
+        memorised = self.memory.promote_if_bifurcated(D, tmp_out)
+
         cognition_out = self.cognition.evaluate(
             stimulus=intention_vector, goals=intention_vector
         )
-        affective_out = self.affective.run(
-            ego=intention_vector, other=intention_vector
-        )
-
-        memory_vector = self.memory.capture(
-            context="ciel.engine",
-            sense=self._safe_repr(signal),
-            associations=None,
-            meta={"novelty_hint": True},
-        )
-        tmp_out = self.memory.run_tmp(memory_vector)
+        affect_out = self.affect.run(ego=intention_vector, other=intention_vector)
 
         return {
-            "config": self.config.as_dict(),
-            "wave": {
-                "time_axis": _as_list(time_axis),
-                "field_shape": list(field.shape),
-            },
-            "intention": _as_list(intention_vector),
+            "status": "ok",
+            "intention_vector": intention_vector,
+            "simulation": simulation,
+            "tmp_outcome": tmp_out,
+            "memorised": memorised,
             "cognition": cognition_out,
-            "affect": affective_out,
-            "memory": {
-                "tmp_out": tmp_out.get("OUT", {}),
-                "report_count": len(self.memory._tmp_reports),
-            },
+            "affect": affect_out,
         }
 
-    def _safe_repr(self, payload: Sequence[float] | None) -> str:
-        if payload is None:
-            return "[]"
-        arr = np.asarray(list(payload), dtype=float)
-        return np.array2string(arr, separator=", ", precision=4)
+    def _intention_to_list(self, vec: Any) -> List[float]:
+        if hasattr(vec, "tolist"):
+            try:
+                return [float(v) for v in vec.tolist()]
+            except Exception:  # pragma: no cover - defensive fallback
+                pass
+        try:
+            return [float(v) for v in vec]
+        except Exception:  # pragma: no cover - final fallback
+            return [float(vec)]
+
+    def _run_kernel(self, intention_vector: List[float]) -> Any:
+        run = getattr(self.kernel, "run", None)
+        if callable(run):
+            try:
+                return run()
+            except TypeError:
+                try:
+                    return run([intention_vector])
+                except TypeError:
+                    return run(intention_vector)
+        synthesise = getattr(self.kernel, "synthesise", None)
+        if callable(synthesise):
+            field, time_axis = synthesise(intention_vector)
+            return {"field": field, "time_axis": time_axis}
+        return None
 
 
 __all__ = ["CielEngine"]

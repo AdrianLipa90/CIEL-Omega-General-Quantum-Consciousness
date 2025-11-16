@@ -1,8 +1,4 @@
-"""CLI entrypoint for running the :class:`CielEngine`.
-
-Usage:
-    python -m ciel
-"""
+"""CLI entrypoint for running the :class:`CielEngine`."""
 
 from __future__ import annotations
 
@@ -17,8 +13,10 @@ def main(argv: list[str] | None = None) -> int:
 
     _ = argv  # placeholder for future argument parsing
     engine = CielEngine()
-    result: dict[str, Any] = engine.process()
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    engine.boot()
+    result: dict[str, Any] = engine.step("Hello, CIEL")
+    print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
+    engine.shutdown()
     return 0
 
 
