@@ -8,7 +8,7 @@ Decision layer combining perception and prediction signals.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Iterable
 
 import numpy as np
@@ -18,7 +18,7 @@ from .prediction import PredictiveCore
 
 @dataclass(slots=True)
 class DecisionCore:
-    predictor: PredictiveCore = PredictiveCore()
+    predictor: PredictiveCore = field(default_factory=PredictiveCore)
 
     def decide(self, perception: Iterable[float], goals: Iterable[float]) -> float:
         score = self.predictor.forecast(perception)
