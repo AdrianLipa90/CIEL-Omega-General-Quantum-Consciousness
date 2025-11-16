@@ -16,6 +16,7 @@ import logging
 from config.ciel_config import CielConfig
 from config.simulation_config import IntentionField
 from wave.fourier_kernel import SpectralWaveField12D
+from .language_backend import AuxiliaryBackend, LanguageBackend
 # UnifiedMemoryOrchestrator is available in vendor profiles; fall back to
 # the test-friendly implementation in ``ciel_memory`` or the compatibility
 # orchestrator in the open-source profile if needed.
@@ -42,6 +43,8 @@ class CielEngine:
     memory: UnifiedMemoryOrchestrator = field(default_factory=UnifiedMemoryOrchestrator)
     cognition: CognitionOrchestrator = field(default_factory=CognitionOrchestrator)
     affect: AffectiveOrchestrator = field(default_factory=AffectiveOrchestrator)
+    language_backend: LanguageBackend | None = None
+    aux_backend: AuxiliaryBackend | None = None
 
     def boot(self) -> None:
         """Initialise the engine (placeholder for future lifecycle hooks)."""
@@ -81,6 +84,33 @@ class CielEngine:
             "cognition": cognition_out,
             "affect": affect_out,
         }
+
+    def interact(
+        self,
+        user_text: str,
+        dialogue: List[Dict[str, str]],
+        context: str = "dialogue",
+        use_aux_analysis: bool = True,
+    ) -> Dict[str, Any]:
+        """Run the core step and optionally generate/assess language outputs."""
+
+        ciel_state = self.step(user_text, context=context)
+        if self.language_backend is None:
+            return {"status": "no_language_backend", "ciel_state": ciel_state}
+
+        reply = self.language_backend.generate_reply(dialogue, ciel_state)
+
+        result: Dict[str, Any] = {
+            "status": "ok",
+            "ciel_state": ciel_state,
+            "reply": reply,
+        }
+
+        if use_aux_analysis and self.aux_backend is not None:
+            analysis = self.aux_backend.analyse_state(ciel_state, reply)
+            result["analysis"] = analysis
+
+        return result
 
     def _intention_to_list(self, vec: Any) -> List[float]:
         if hasattr(vec, "tolist"):
