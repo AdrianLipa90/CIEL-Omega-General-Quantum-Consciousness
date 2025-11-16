@@ -7,4 +7,4 @@ from __future__ import annotations
 
 from .engine import CielEngine
 
-__all__ = ["CielEngine"]
+__all__: list[str] = ["CielEngine"]
