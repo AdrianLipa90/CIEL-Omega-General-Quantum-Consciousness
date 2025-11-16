@@ -11,9 +11,10 @@ import argparse
 import json
 import logging
 import sys
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from .engine import CielEngine
+from .hf_backends import AuxLLMBackend, PrimaryLLMBackend
 
 
 def setup_logging(level: str) -> None:
@@ -31,6 +32,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="CIEL/Ω unified engine")
     parser.add_argument("--mode", choices=["repl", "once"], default="repl")
     parser.add_argument("--text", type=str, default="", help="Input text for once mode.")
+    parser.add_argument("--primary-model", type=str, default="mistral-7b-instruct")
+    parser.add_argument("--aux-model", type=str, default="phi-3-mini-3.8b")
+    parser.add_argument("--enable-llm", action="store_true", help="Attach HF language backends.")
     parser.add_argument(
         "--log-level",
         type=str,
@@ -56,27 +60,45 @@ def _dump(obj: Dict[str, Any]) -> str:
     return json.dumps(obj, default=default, ensure_ascii=False, indent=2)
 
 
-def run_repl(engine: CielEngine) -> None:
+def run_repl(engine: CielEngine, enable_llm: bool) -> None:
     """Process lines from stdin, printing JSON results per line."""
 
+    dialogue: List[Dict[str, str]] = []
     print("CIEL Engine REPL. Ctrl+D to exit.", file=sys.stderr)
     for line in sys.stdin:
         line = line.rstrip("\n")
         if not line.strip():
             continue
-        result = engine.step(line)
+        result = _process_text(engine, line, enable_llm, dialogue)
         print(_dump(result))
         print()
 
 
-def run_once(engine: CielEngine, text: str) -> None:
+def run_once(engine: CielEngine, text: str, enable_llm: bool) -> None:
     """Run the engine once with the provided text."""
 
     if not text.strip():
         print("No --text provided.", file=sys.stderr)
         sys.exit(1)
-    result = engine.step(text)
+    result = _process_text(engine, text, enable_llm, [])
     print(_dump(result))
+
+
+def _process_text(
+    engine: CielEngine,
+    text: str,
+    enable_llm: bool,
+    dialogue: List[Dict[str, str]],
+) -> Dict[str, Any]:
+    if not enable_llm:
+        return engine.step(text)
+
+    dialogue.append({"role": "user", "content": text})
+    response = engine.interact(text, dialogue)
+    reply = response.get("reply")
+    if reply is not None:
+        dialogue.append({"role": "assistant", "content": str(reply)})
+    return response
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -89,12 +111,17 @@ def main(argv: list[str] | None = None) -> None:
     log.info("Starting CielEngine in mode=%s", args.mode)
 
     engine = CielEngine()
+    if args.enable_llm:
+        primary = PrimaryLLMBackend(model_name=args.primary_model)
+        aux = AuxLLMBackend(model_name=args.aux_model)
+        engine.language_backend = primary
+        engine.aux_backend = aux
     engine.boot()
     try:
         if args.mode == "repl":
-            run_repl(engine)
+            run_repl(engine, args.enable_llm)
         else:
-            run_once(engine, args.text)
+            run_once(engine, args.text, args.enable_llm)
     finally:
         engine.shutdown()
 
