@@ -16,7 +16,16 @@ import logging
 from config.ciel_config import CielConfig
 from config.simulation_config import IntentionField
 from wave.fourier_kernel import SpectralWaveField12D
-from core.memory.orchestrator import UnifiedMemoryOrchestrator
+# UnifiedMemoryOrchestrator is available in vendor profiles; fall back to
+# the test-friendly implementation in ``ciel_memory`` or the compatibility
+# orchestrator in the open-source profile if needed.
+try:  # pragma: no cover - vendor profile
+    from core.memory.orchestrator import UnifiedMemoryOrchestrator
+except ImportError:  # pragma: no cover - open-source/test profile
+    try:
+        from ciel_memory.orchestrator import UnifiedMemoryOrchestrator
+    except ImportError:  # pragma: no cover - compatibility fallback
+        from core.memory.orchestrator import Orchestrator as UnifiedMemoryOrchestrator
 from cognition.orchestrator import CognitionOrchestrator
 from emotion.affective_orchestrator import AffectiveOrchestrator
 
