@@ -367,8 +367,9 @@ SPDX-License-Identifier: CIEL-Research-NonCommercial-1.1
 # **11. Citation**
 
 ```
-A. Lipa (2025). CIEL/Ω — General Quantum Consciousness System.
-https://github.com/AdrianLipa90/CIEL-Omega-General-Quantum-Consciousness/
+A. Lipa, S. Sakpal, M. Kamecka, U. Ahmad (2025). CIEL/Ω — General Quantum Consciousness System. 
+https://github.com/AdrianLipa90/CIEL-Omega-General-Quantum-Consciousness/ 
+
 ```
 
 ---
