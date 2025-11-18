@@ -1,6 +1,6 @@
 # Fourier Wave Consciousness Kernel
 
-`wave.fourier_kernel` exposes the curated implementation of the 12D Fourier
+`ciel_wave.fourier_kernel` exposes the curated implementation of the 12D Fourier
 consciousness kernel.  The module mirrors the terminology from the archival
 notes while depending solely on the lightweight primitives that ship with this
 repository.
@@ -10,7 +10,7 @@ repository.
 > embed or extend the kernel; consult `LICENSE` for the complete terms.
 
 ```python
-from wave.fourier_kernel import FourierWaveConsciousnessKernel12D
+from ciel_wave.fourier_kernel import FourierWaveConsciousnessKernel12D
 
 kernel = FourierWaveConsciousnessKernel12D()
 snapshot = kernel.simulate(signal)
