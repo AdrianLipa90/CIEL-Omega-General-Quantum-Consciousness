@@ -5,11 +5,39 @@ A. Lipa, S. Sakpal, M. Kamecka, U. Ahmad (2025). (c) 2025 Adrian Lipa / Intentio
 
 This repository organizes the uploaded CIEL project drafts into a coherent Python package layout. Production modules now live in first-party packages; the historic drops remain preserved under ext/ for reference but are no longer imported or distributed.
 
+The spectral Fourier kernel is published as `ciel_wave` (renamed from the legacy local `wave` package) to avoid clashing with Python’s standard library module of the same name. Use imports such as `from ciel_wave.fourier_kernel import SpectralWaveField12D` in code and tests.
+
 No placeholders were added to the active code.
 All runtime packages expose deterministic, well tested behaviour.
 Hyphens were normalized to underscores in module filenames.
 Tests verify imports, pipelines and persistence.
 Source provenance: the ext/ directory contains the raw batch extensions (Ext1 … Ext21, FWCKU, Emot, kernels, paradox notes). They stay untouched as archival material. The Python package published by setup.py excludes those modules and instead uses the curated equivalents under bio/, emotion/, fields/, memory/, integration/, etc.
+
+## Smoke test after installation
+
+After cloning the repository, you can verify a fresh installation with a minimal smoke test that only depends on the published package (no local paths or `ext/`).
+
+Linux/macOS:
+
+```bash
+python -m venv .venv_test
+source .venv_test/bin/activate
+pip install --upgrade pip setuptools wheel
+pip install .
+python -c "import ciel; from ciel import CielEngine; print('IMPORT OK, CielEngine:', CielEngine)"
+python scripts/smoke_test.py
+```
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv_test
+\.\.venv_test\Scripts\Activate.ps1
+pip install --upgrade pip setuptools wheel
+pip install .
+python -c "import ciel; from ciel import CielEngine; Write-Host 'IMPORT OK, CielEngine:' $([string][type]::GetType('ciel.engine.CielEngine'))"
+python scripts\smoke_test.py
+```
 
 ### Information Flow Pipeline
  wires the biological receivers, emotional analysis, field primitives and memory persistence into a deterministic pipeline. Each call to InformationFlow.step filters an incoming sensor signal, projects it into the intention field, computes emotional statistics, evaluates the soul invariant metric and persists the enriched entry to long term memory.

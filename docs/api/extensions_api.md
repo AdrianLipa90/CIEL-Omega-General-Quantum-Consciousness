@@ -11,3 +11,6 @@ For maintained entry points see:
 - `emotion.utils` and `emotion.emotion_core` for the lightweight affective analysis helpers.
 - `integration.information_flow.InformationFlow` to observe the full EEG ➜ intention ➜ emotion ➜
   memory pipeline without touching the archival modules.
+- `ciel_wave.fourier_kernel.SpectralWaveField12D` for the spectral kernel (renamed from the local
+  `wave` package to avoid collisions with Python’s stdlib `wave`).
+

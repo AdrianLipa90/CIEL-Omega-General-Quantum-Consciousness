@@ -6,7 +6,7 @@ Licensed under the CIEL Research Non-Commercial License v1.1.
 
 import numpy as np
 
-from wave.fourier_kernel import (
+from ciel_wave.fourier_kernel import (
     FourierWaveConsciousnessKernel12D,
     KernelSnapshot,
     SimConfig,
