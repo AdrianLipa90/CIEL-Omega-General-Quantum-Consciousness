@@ -15,7 +15,7 @@ import logging
 
 from config.ciel_config import CielConfig
 from config.simulation_config import IntentionField
-from wave.fourier_kernel import SpectralWaveField12D
+from ciel_wave.fourier_kernel import SpectralWaveField12D
 from .language_backend import AuxiliaryBackend, LanguageBackend
 # UnifiedMemoryOrchestrator is available in vendor profiles; fall back to
 # the test-friendly implementation in ``ciel_memory`` or the compatibility

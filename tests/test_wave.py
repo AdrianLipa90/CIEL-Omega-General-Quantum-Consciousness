@@ -6,5 +6,5 @@ Licensed under the CIEL Research Non-Commercial License v1.1.
 
 
 def test_wave_imports():
-    from wave.fourier_kernel import SpectralWaveField12D
+    from ciel_wave.fourier_kernel import SpectralWaveField12D
     assert SpectralWaveField12D is not None
