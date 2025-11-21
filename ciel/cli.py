@@ -11,12 +11,24 @@ import argparse
 import json
 from typing import Any, Dict
 
+import numpy as np
+
 from ciel import CielEngine
 
 
 def _run_engine(text: str) -> Dict[str, Any]:
     engine = CielEngine()
     return engine.step(text)
+
+
+def _json_default(obj: Any) -> Any:
+    """Make engine output safe for JSON encoding."""
+
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, (np.floating, np.integer)):
+        return obj.item()
+    return str(obj)
 
 
 def run_engine() -> None:
@@ -32,7 +44,7 @@ def run_engine() -> None:
     args = parser.parse_args()
 
     result = _run_engine(args.text)
-    print(json.dumps(result, indent=2, sort_keys=True))
+    print(json.dumps(result, indent=2, sort_keys=True, default=_json_default))
 
 
 def smoke_test() -> None:
