@@ -1,18 +1,23 @@
-import pytest
+import unittest
 
 from ciel import CielEngine
 
 
-def test_ciel_engine_step_integration():
-    engine = CielEngine()
-    engine.boot()
-    try:
-        result = engine.step("hello world")
+class TestCielEngineIntegration(unittest.TestCase):
+    def test_ciel_engine_step_integration(self) -> None:
+        engine = CielEngine()
+        engine.boot()
+        try:
+            result = engine.step("hello world")
 
-        assert result["status"] == "ok"
-        assert "simulation" in result
-        assert "tmp_outcome" in result
-        assert "cognition" in result
-        assert "affect" in result
-    finally:
-        engine.shutdown()
+            self.assertEqual(result["status"], "ok")
+            self.assertIn("simulation", result)
+            self.assertIn("tmp_outcome", result)
+            self.assertIn("cognition", result)
+            self.assertIn("affect", result)
+        finally:
+            engine.shutdown()
+
+
+if __name__ == "__main__":
+    unittest.main()

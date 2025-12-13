@@ -9,3 +9,12 @@ build/
 .env
 .ipynb_checkpoints/
 CIEL_MEMORY_SYSTEM/
+venv/
+.venv/
+*.gguf
+main/llm/models/
+ciel_autosave.json
+*.code-workspace
+...desktop
+*.wav
+ext/CIEL_CLEAN_KERNEL_MERGED_VARIANTS/

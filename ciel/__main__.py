@@ -10,11 +10,11 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from typing import Any, Dict, List
 
 from .engine import CielEngine
-from .hf_backends import AuxLLMBackend, PrimaryLLMBackend
 
 
 def setup_logging(level: str) -> None:
@@ -35,6 +35,23 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--primary-model", type=str, default="mistral-7b-instruct")
     parser.add_argument("--aux-model", type=str, default="phi-3-mini-3.8b")
     parser.add_argument("--enable-llm", action="store_true", help="Attach HF language backends.")
+    parser.add_argument(
+        "--llm-backend",
+        type=str,
+        choices=["hf", "gguf"],
+        default=None,
+        help="Select LLM backend (default: env CIEL_LLM_BACKEND or hf).",
+    )
+    parser.add_argument(
+        "--gguf-model-path",
+        type=str,
+        default=None,
+        help="Path to a GGUF model file. Overrides env CIEL_GGUF_MODEL_PATH.",
+    )
+    parser.add_argument("--gguf-n-ctx", type=int, default=2048)
+    parser.add_argument("--gguf-n-threads", type=int, default=4)
+    parser.add_argument("--gguf-n-gpu-layers", type=int, default=0)
+    parser.add_argument("--gguf-system-prompt", type=str, default="")
     parser.add_argument(
         "--log-level",
         type=str,
@@ -112,10 +129,28 @@ def main(argv: list[str] | None = None) -> None:
 
     engine = CielEngine()
     if args.enable_llm:
-        primary = PrimaryLLMBackend(model_name=args.primary_model)
-        aux = AuxLLMBackend(model_name=args.aux_model)
-        engine.language_backend = primary
-        engine.aux_backend = aux
+        try:
+            from .llm_registry import build_default_bundle
+
+            if args.gguf_model_path:
+                os.environ["CIEL_GGUF_MODEL_PATH"] = args.gguf_model_path
+
+            bundle = build_default_bundle(
+                lite_model=args.primary_model,
+                standard_model=args.primary_model,
+                science_model=args.primary_model,
+                analysis_model=args.aux_model,
+                validator_model=args.aux_model,
+                backend=args.llm_backend,
+                gguf_n_ctx=args.gguf_n_ctx,
+                gguf_n_threads=args.gguf_n_threads,
+                gguf_n_gpu_layers=args.gguf_n_gpu_layers,
+                gguf_system_prompt=args.gguf_system_prompt,
+            )
+            engine.language_backend = bundle.standard
+            engine.aux_backend = bundle.composite_aux()
+        except Exception as exc:
+            log.warning("HF backends unavailable (%s); continuing without LLM.", exc)
     engine.boot()
     try:
         if args.mode == "repl":

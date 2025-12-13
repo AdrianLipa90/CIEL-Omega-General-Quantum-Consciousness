@@ -20,6 +20,36 @@ def safe_inv(values: Iterable[float], eps: float = 1e-9) -> np.ndarray:
     return 1.0 / arr
 
 
+def norm(x: np.ndarray | Iterable[float] | float, eps: float = 1e-12) -> float:
+    arr = np.asarray(x)
+    value = float(np.linalg.norm(arr))
+    if value < eps:
+        return 0.0
+    return value
+
+
+def field_norm(field: np.ndarray, eps: float = 1e-12) -> float:
+    return norm(field, eps=eps)
+
+
+def resonance(a: np.ndarray, b: np.ndarray, eps: float = 1e-12) -> float:
+    av = np.asarray(a).ravel().astype(complex)
+    bv = np.asarray(b).ravel().astype(complex)
+    denom = (np.linalg.norm(av) * np.linalg.norm(bv))
+    if denom < eps:
+        return 0.0
+    ip = np.vdot(av, bv)
+    return float((np.abs(ip) / denom) ** 2)
+
+
+def coherence(field: np.ndarray, eps: float = 1e-12) -> float:
+    vec = np.asarray(field).ravel().astype(complex)
+    denom = np.linalg.norm(vec)
+    if denom < eps:
+        return 0.0
+    return float(np.abs(np.sum(vec)) / (denom * np.sqrt(vec.size)))
+
+
 def heisenberg_soft_clip(x: np.ndarray | float, scale: float, eps: float = 1e-12) -> np.ndarray:
     """Smoothly saturate values without introducing hard cut-offs.
 
@@ -59,6 +89,10 @@ def heisenberg_soft_clip_range(
 
 __all__ = [
     "safe_inv",
+    "norm",
+    "field_norm",
+    "coherence",
+    "resonance",
     "heisenberg_soft_clip",
     "heisenberg_soft_clip_range",
 ]

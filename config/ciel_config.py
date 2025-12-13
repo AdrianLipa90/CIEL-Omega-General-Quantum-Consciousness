@@ -15,6 +15,7 @@ here and re-export it from the legacy locations.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
 from pathlib import Path
 from typing import Optional
 
@@ -34,6 +35,22 @@ class CielConfig:
     ethics_min_coherence: float = 0.4
     ethics_block_on_violation: bool = True
     dataset_path: Optional[Path] = None
+
+    def load_from_file(self, path: str | Path) -> None:
+        p = Path(path)
+        if not p.exists():
+            raise FileNotFoundError(str(p))
+        raw = p.read_text(encoding="utf-8")
+        data = json.loads(raw)
+        if not isinstance(data, dict):
+            raise ValueError("config file must contain a JSON object")
+        for key, value in data.items():
+            if not hasattr(self, key):
+                continue
+            if key in {"log_path", "dataset_path"} and value is not None:
+                setattr(self, key, Path(value))
+            else:
+                setattr(self, key, value)
 
     def as_dict(self) -> dict[str, object]:
         """Return a plain serialisable dictionary representation."""
