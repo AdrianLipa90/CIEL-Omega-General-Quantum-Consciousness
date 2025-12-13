@@ -8,6 +8,53 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from .language_backend import AuxiliaryBackend, LanguageBackend
 
 
+def _json_default(obj: Any) -> Any:
+    try:
+        import numpy as np
+
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        if isinstance(obj, (np.integer, np.floating)):
+            return obj.item()
+    except Exception:
+        pass
+
+    if isinstance(obj, (set, tuple)):
+        return list(obj)
+
+    return str(obj)
+
+
+def _reduce_simulation(simulation: Any) -> Any:
+    if not isinstance(simulation, dict):
+        return simulation
+
+    reduced: Dict[str, Any] = {}
+
+    if simulation.get("lambda0") is not None:
+        reduced["lambda0"] = simulation.get("lambda0")
+    if simulation.get("raw") is not None:
+        reduced["raw"] = simulation.get("raw")
+
+    field = simulation.get("field")
+    if field is not None:
+        try:
+            rows = len(field)
+            cols = len(field[0]) if rows else 0
+            reduced["field_shape"] = [rows, cols]
+        except Exception:
+            reduced["field_shape"] = None
+
+    tensor = simulation.get("resonance_tensor")
+    if tensor is not None:
+        try:
+            reduced["resonance_tensor_head"] = [row[:3] for row in tensor[:3]]
+        except Exception:
+            reduced["resonance_tensor_head"] = tensor
+
+    return reduced
+
+
 class PrimaryLLMBackend(LanguageBackend):
     def __init__(
         self,
@@ -42,11 +89,11 @@ class PrimaryLLMBackend(LanguageBackend):
     def _summarize_state(self, ciel_state: Dict[str, Any]) -> str:
         summary = {
             "intention_vector": ciel_state.get("intention_vector"),
-            "simulation": ciel_state.get("simulation"),
+            "simulation": _reduce_simulation(ciel_state.get("simulation")),
             "cognition": ciel_state.get("cognition"),
             "affect": ciel_state.get("affect"),
         }
-        return json.dumps(summary)
+        return json.dumps(summary, ensure_ascii=False, default=_json_default)
 
     def generate_reply(
         self,
@@ -92,11 +139,11 @@ class AuxLLMBackend(AuxiliaryBackend):
     def _build_prompt(self, ciel_state: Dict[str, Any], candidate_reply: str) -> str:
         summary = {
             "intention_vector": ciel_state.get("intention_vector"),
-            "simulation": ciel_state.get("simulation"),
+            "simulation": _reduce_simulation(ciel_state.get("simulation")),
             "cognition": ciel_state.get("cognition"),
             "affect": ciel_state.get("affect"),
         }
-        state_json = json.dumps(summary)
+        state_json = json.dumps(summary, ensure_ascii=False, default=_json_default)
         return (
             "Evaluate the following reply for coherence and helpfulness given the state. "
             "Provide JSON with keys coherence, helpfulness, keywords, emotion.\n"

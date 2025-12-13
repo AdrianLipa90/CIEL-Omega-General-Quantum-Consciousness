@@ -16,6 +16,7 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
         "device": None,
     },
     "gguf": {
+        "models_dir": "",
         "lite_model_path": "",
         "standard_model_path": "",
         "science_model_path": "",
@@ -23,6 +24,9 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
         "n_threads": 4,
         "n_gpu_layers": 0,
         "system_prompt": "",
+        "install_profile": "standard",
+        "install_url": "",
+        "install_sha256": "",
     },
     "chat": {
         "mode": "standard",

@@ -100,8 +100,19 @@ class CIEL0Framework:
             Resonance field R ∈ [0,1] (real array)
         """
         # Inner product computation
-        inner_product = np.sum(np.conj(S) * I, axis=-1) if S.ndim > I.ndim else np.conj(S) * I
-        return np.abs(inner_product) ** 2
+        if S.ndim > I.ndim:
+            inner_product = np.sum(np.conj(S) * I, axis=-1)
+            mag_s = np.linalg.norm(S, axis=-1)
+            mag_i = np.abs(I)
+        else:
+            inner_product = np.conj(S) * I
+            mag_s = np.abs(S)
+            mag_i = np.abs(I)
+
+        mag_similarity = (2.0 * mag_s * mag_i) / (mag_s * mag_s + mag_i * mag_i + 1e-15)
+        phase_alignment = np.cos(np.angle(inner_product)) ** 2
+        resonance = mag_similarity * phase_alignment
+        return np.clip(resonance, 0.0, 1.0 - 1e-12)
     
     def compute_lambda0_operator(self, B_field: np.ndarray, rho: np.ndarray, 
                                 L_scale: float = None) -> np.ndarray:
@@ -184,7 +195,7 @@ class CIEL0Framework:
             Symbolic entropy field [dimensionless]
         """
         # Avoid log(0) singularity
-        R_safe = np.maximum(R, 1e-15)
+        R_safe = np.clip(R, 1e-15, 1.0 - 1e-12)
         return -R_safe * np.log(R_safe)
     
     def compute_intention_dynamics(self, I: np.ndarray, tau: np.ndarray, 

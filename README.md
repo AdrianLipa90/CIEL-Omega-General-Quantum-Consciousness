@@ -238,8 +238,11 @@ Optional (local LLM inference):
 
 ## Getting started
 
-- Run smoke test: `python scripts/smoke_test.py`
-- Run CLI engine: `python -m ciel`
+- Run smoke test: `python3 scripts/smoke_test.py`
+- Run CLI engine: `python3 -m ciel`
+- Run tests: `python3 -m pytest -q`
+- GGUF backend (requires `llama-cpp-python` + local `.gguf`):
+  - `python3 -m ciel --enable-llm --llm-backend gguf --mode once --text "test" --gguf-model-path /path/to/model.gguf`
 - If you use the GUI client, see `run_gui.sh` and ensure GUI dependencies are installed.
 
 ---

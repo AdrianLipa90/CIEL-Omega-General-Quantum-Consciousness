@@ -48,9 +48,15 @@ class EngineBridge:
             if backend == "gguf":
                 gguf_cfg = self.settings.get("gguf") or {}
 
+                models_dir = str(gguf_cfg.get("models_dir") or "").strip()
                 lite_path = str(gguf_cfg.get("lite_model_path") or "").strip()
                 standard_path = str(gguf_cfg.get("standard_model_path") or "").strip()
                 science_path = str(gguf_cfg.get("science_model_path") or "").strip()
+
+                if models_dir:
+                    os.environ["CIEL_GGUF_MODELS_DIR"] = models_dir
+                else:
+                    os.environ.pop("CIEL_GGUF_MODELS_DIR", None)
 
                 if lite_path:
                     os.environ["CIEL_GGUF_LITE_MODEL_PATH"] = lite_path
@@ -102,26 +108,43 @@ class EngineBridge:
             return "science"
         return "standard"
 
-    def interact(self, *, user_text: str, mode: str, profile: str) -> Dict[str, Any]:
+    def interact(
+        self,
+        *,
+        user_text: str,
+        mode: str,
+        profile: str,
+        memory: Optional[str] = None,
+    ) -> Dict[str, Any]:
         if self.engine is None:
             return {"status": "no_engine"}
 
         selected_profile = self._select_profile(profile)
+        mode_key = (mode or "dialogue").strip().lower() or "dialogue"
+        memory_key = (memory or "").strip().lower()
+        context = f"{mode_key}:{memory_key}" if memory_key else mode_key
+        history_limit = int(((self.settings.get("chat") or {}).get("history_limit") or 40))
 
         with self._lock:
             if self.llm_bundle is not None:
                 self.engine.language_backend = self.llm_bundle.primary_for(selected_profile)
                 self.engine.aux_backend = self.llm_bundle.composite_aux()
 
+            if history_limit > 0 and len(self.dialogue) > history_limit:
+                self.dialogue = self.dialogue[-history_limit:]
+
             self.dialogue.append({"role": "user", "content": user_text})
 
             t0 = time.perf_counter()
-            result = self.engine.interact(user_text, self.dialogue, context=mode)
+            result = self.engine.interact(user_text, self.dialogue, context=context)
             self.last_latency_ms = (time.perf_counter() - t0) * 1000.0
 
             reply = result.get("reply")
             if reply is not None:
                 self.dialogue.append({"role": "assistant", "content": str(reply)})
+
+            if history_limit > 0 and len(self.dialogue) > history_limit:
+                self.dialogue = self.dialogue[-history_limit:]
 
             try:
                 self.last_lambda0 = float(
@@ -137,7 +160,12 @@ class EngineBridge:
             return None
         with self._lock:
             try:
-                return self.engine.step("status")
+                result = self.engine.step("status")
+                try:
+                    self.last_lambda0 = float(((result.get("simulation") or {}).get("lambda0")))
+                except Exception:
+                    self.last_lambda0 = None
+                return result
             except Exception:
                 return None
 

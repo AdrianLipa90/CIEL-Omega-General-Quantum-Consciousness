@@ -276,7 +276,26 @@ class LLMBackendBundle:
         return self.standard
 
     def composite_aux(self) -> AuxiliaryBackend:
-        return CompositeAuxBackend(backends=[self.analysis, self.validator])
+        analysis = self.analysis
+        validator = self.validator
+
+        class _NamedAux(AuxiliaryBackend):
+            def __init__(self, name: str, backend: AuxiliaryBackend) -> None:
+                self.name = name
+                self._backend = backend
+
+            def analyse_state(
+                self,
+                ciel_state: Dict[str, Any],
+                candidate_reply: str,
+            ) -> Dict[str, Any]:
+                return self._backend.analyse_state(ciel_state, candidate_reply)
+
+        backends: List[AuxiliaryBackend] = [
+            _NamedAux(name=f"{analysis.name}:analysis", backend=analysis),
+            _NamedAux(name=f"{validator.name}:validator", backend=validator),
+        ]
+        return CompositeAuxBackend(backends=backends)
 
 
 def build_default_bundle(

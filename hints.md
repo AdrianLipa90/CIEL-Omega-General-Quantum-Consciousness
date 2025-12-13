@@ -3,10 +3,11 @@
 ## 1) Instalacja (zalecane: venv)
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install --upgrade pip setuptools wheel
+python3 -m pip install -r requirements.txt
+python3 -m pip install -U pytest
 ```
 
 Alternatywnie (jeśli chcesz mieć komendy CLI z `setup.py`):
@@ -26,7 +27,13 @@ ciel-smoke
 Albo bez instalacji paczki (z katalogu repo):
 
 ```bash
-python -c "import ciel; from ciel import CielEngine; print('IMPORT OK', CielEngine)"
+python3 -c "import ciel; from ciel import CielEngine; print('IMPORT OK', CielEngine)"
+```
+
+Jeśli chcesz uruchomić cały zestaw testów:
+
+```bash
+python3 -m pytest -q
 ```
 
 ## 3) Uruchamianie silnika (polecane entrypointy)
@@ -36,13 +43,13 @@ python -c "import ciel; from ciel import CielEngine; print('IMPORT OK', CielEngi
 REPL:
 
 ```bash
-python -m ciel --mode repl
+python3 -m ciel --mode repl
 ```
 
 Jednorazowo:
 
 ```bash
-python -m ciel --mode once --text "hello from CIEL"
+python3 -m ciel --mode once --text "hello from CIEL"
 ```
 
 ### 3.2 Komendy z `setup.py` (po `pip install .`)
@@ -57,20 +64,11 @@ ciel-smoke
 
 ## 4) `main.py` (historyczny/alternatywny punkt wejścia)
 
-W repo jest też `main.py`, który uruchamia inny orchestrator (bardziej „aplikacyjny”):
+W repo jest też `main.py`, który jest cienkim wrapperem na `python3 -m ciel`:
 
 ```bash
-python main.py --mode interactive
+python3 main.py --mode repl
 ```
-
-Tryby:
-
-```bash
-python main.py --mode simulation --steps 100
-python main.py --mode llm
-```
-
-Uwaga: ten tryb może wymagać dodatkowych zależności zależnie od konfiguracji modułów LLM w folderze `llm/`.
 
 ## 5) Opcjonalne dodatki (nie wchodzą w bazowe requirements)
 
@@ -79,24 +77,41 @@ Uwaga: ten tryb może wymagać dodatkowych zależności zależnie od konfiguracj
 Moduł `ciel/hf_backends.py` używa `transformers`.
 
 ```bash
-pip install transformers
+python3 -m pip install transformers
 ```
 
 W praktyce zwykle potrzebujesz też backendu modelu (najczęściej `torch`), np.:
 
 ```bash
-pip install torch
+python3 -m pip install torch
 ```
 
 Uruchomienie:
 
 ```bash
-python -m ciel --enable-llm --mode once --text "test" \
+python3 -m ciel --enable-llm --mode once --text "test" \
   --primary-model mistral-7b-instruct \
   --aux-model phi-3-mini-3.8b
 ```
 
 Jeżeli nie masz GPU/nie chcesz ściągać ciężkich paczek, uruchamiaj bez `--enable-llm`.
+
+### 5.2 LLM (GGUF / llama.cpp) dla `python3 -m ciel --enable-llm --llm-backend gguf`
+
+Wymaga `llama-cpp-python` oraz lokalnego pliku modelu `.gguf`.
+
+```bash
+python3 -m pip install llama-cpp-python
+```
+
+Uruchomienie:
+
+```bash
+python3 -m ciel --enable-llm --llm-backend gguf --mode once --text "test" \
+  --gguf-model-path /path/to/model.gguf
+```
+
+Uwaga: pliki `*.gguf` są ignorowane przez git w tym repo (`.gitignore`), więc modele trzymaj lokalnie.
 
 ### 5.2 Dashboard pamięci (Streamlit)
 

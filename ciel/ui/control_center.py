@@ -39,7 +39,7 @@ from PyQt5.QtWidgets import (  # noqa: E402
 )
 
 from .engine_bridge import EngineBridge  # noqa: E402
-from .pages import ChatPage, DashboardPage, RealtimePage, SettingsPage  # noqa: E402
+from .pages import ChatPage, DashboardPage, GraphsPage, RealtimePage, SettingsPage  # noqa: E402
 from .settings_store import load_settings, save_settings  # noqa: E402
 from .theme import dark_stylesheet  # noqa: E402
 
@@ -87,6 +87,7 @@ class ControlCenterWindow(QWidget):
         self.nav.setFixedWidth(190)
         self.nav.addItem("Dashboard")
         self.nav.addItem("Realtime")
+        self.nav.addItem("Graphs")
         self.nav.addItem("Chat")
         self.nav.addItem("Settings")
         self.nav.currentRowChanged.connect(self._on_nav_changed)
@@ -97,11 +98,13 @@ class ControlCenterWindow(QWidget):
 
         self.page_dashboard = DashboardPage(settings=self._settings)
         self.page_realtime = RealtimePage(bridge=self._bridge, settings=self._settings)
+        self.page_graphs = GraphsPage(bridge=self._bridge, settings=self._settings)
         self.page_chat = ChatPage(bridge=self._bridge, settings=self._settings)
         self.page_settings = SettingsPage(bridge=self._bridge, settings=self._settings)
 
         self.stack.addWidget(self.page_dashboard)
         self.stack.addWidget(self.page_realtime)
+        self.stack.addWidget(self.page_graphs)
         self.stack.addWidget(self.page_chat)
         self.stack.addWidget(self.page_settings)
 
@@ -146,6 +149,12 @@ class ControlCenterWindow(QWidget):
         try:
             if hasattr(self, "page_realtime"):
                 self.page_realtime.shutdown()
+        except Exception:
+            pass
+
+        try:
+            if hasattr(self, "page_graphs"):
+                self.page_graphs.shutdown()
         except Exception:
             pass
 

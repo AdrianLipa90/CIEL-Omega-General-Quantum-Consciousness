@@ -7,6 +7,23 @@ from typing import Any, Dict, List, Optional, Tuple
 from .language_backend import AuxiliaryBackend, LanguageBackend
 
 
+def _json_default(obj: Any) -> Any:
+    try:
+        import numpy as np
+
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        if isinstance(obj, (np.integer, np.floating)):
+            return obj.item()
+    except Exception:
+        pass
+
+    if isinstance(obj, (set, tuple)):
+        return list(obj)
+
+    return str(obj)
+
+
 _LLAMA_CACHE: Dict[Tuple[str, int, int, int], Any] = {}
 
 
@@ -26,14 +43,44 @@ def _format_dialogue(dialogue: List[Dict[str, str]]) -> str:
     return "\n".join(lines)
 
 
+def _reduce_simulation(simulation: Any) -> Any:
+    if not isinstance(simulation, dict):
+        return simulation
+
+    reduced: Dict[str, Any] = {}
+
+    if simulation.get("lambda0") is not None:
+        reduced["lambda0"] = simulation.get("lambda0")
+    if simulation.get("raw") is not None:
+        reduced["raw"] = simulation.get("raw")
+
+    field = simulation.get("field")
+    if field is not None:
+        try:
+            rows = len(field)
+            cols = len(field[0]) if rows else 0
+            reduced["field_shape"] = [rows, cols]
+        except Exception:
+            reduced["field_shape"] = None
+
+    tensor = simulation.get("resonance_tensor")
+    if tensor is not None:
+        try:
+            reduced["resonance_tensor_head"] = [row[:3] for row in tensor[:3]]
+        except Exception:
+            reduced["resonance_tensor_head"] = tensor
+
+    return reduced
+
+
 def _summarize_state(ciel_state: Dict[str, Any]) -> str:
     summary = {
         "intention_vector": ciel_state.get("intention_vector"),
-        "simulation": ciel_state.get("simulation"),
+        "simulation": _reduce_simulation(ciel_state.get("simulation")),
         "cognition": ciel_state.get("cognition"),
         "affect": ciel_state.get("affect"),
     }
-    return json.dumps(summary, ensure_ascii=False)
+    return json.dumps(summary, ensure_ascii=False, default=_json_default)
 
 
 def _extract_text(output: Any) -> str:

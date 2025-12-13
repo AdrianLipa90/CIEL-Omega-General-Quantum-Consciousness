@@ -12,10 +12,13 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
 import logging
+import numpy as np
 
 from config.ciel_config import CielConfig
 from config.simulation_config import IntentionField
 from ciel_wave.fourier_kernel import SpectralWaveField12D
+from ethics.lambda0_operator import Lambda0Operator
+from fields.soul_invariant import SoulInvariant
 from .language_backend import AuxiliaryBackend, LanguageBackend
 # UnifiedMemoryOrchestrator is available in vendor profiles; fall back to
 # the test-friendly implementation in ``ciel_memory`` or the compatibility
@@ -43,6 +46,9 @@ class CielEngine:
     memory: UnifiedMemoryOrchestrator = field(default_factory=UnifiedMemoryOrchestrator)
     cognition: CognitionOrchestrator = field(default_factory=CognitionOrchestrator)
     affect: AffectiveOrchestrator = field(default_factory=AffectiveOrchestrator)
+    lambda0_operator: Lambda0Operator = field(
+        default_factory=lambda: Lambda0Operator(SoulInvariant()), repr=False
+    )
     language_backend: LanguageBackend | None = None
     aux_backend: AuxiliaryBackend | None = None
 
@@ -136,7 +142,33 @@ class CielEngine:
         synthesise = getattr(self.kernel, "synthesise", None)
         if callable(synthesise):
             field, time_axis = synthesise(intention_vector)
-            return {"field": field, "time_axis": time_axis}
+            simulation: Dict[str, Any] = {"field": field, "time_axis": time_axis}
+
+            try:
+                simulation["lambda0"] = float(self.lambda0_operator.evaluate(field))
+            except Exception:
+                simulation["lambda0"] = None
+
+            try:
+                raw = np.mean(field, axis=0)
+                simulation["raw"] = [float(v) for v in raw.tolist()]
+            except Exception:
+                simulation["raw"] = None
+
+            try:
+                channels = int(field.shape[0]) if hasattr(field, "shape") else 0
+                k = min(5, channels) if channels else 0
+                if k:
+                    energy = np.mean(np.square(field[:k]), axis=1)
+                    tensor = np.outer(energy, energy)
+                    norm = float(np.linalg.norm(tensor) or 1.0)
+                    simulation["resonance_tensor"] = (tensor / norm).tolist()
+                else:
+                    simulation["resonance_tensor"] = None
+            except Exception:
+                simulation["resonance_tensor"] = None
+
+            return simulation
         return None
 
 

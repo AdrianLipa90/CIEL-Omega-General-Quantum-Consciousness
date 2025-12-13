@@ -174,17 +174,17 @@ class ChatPage(QWidget):
         self.set_busy(True)
         threading.Thread(
             target=self._run_interact,
-            args=(text, mode, profile),
+            args=(text, mode, profile, memory),
             daemon=True,
         ).start()
 
-    def _run_interact(self, text: str, mode: str, profile: str) -> None:
+    def _run_interact(self, text: str, mode: str, profile: str, memory: str) -> None:
         result: Optional[Dict[str, Any]] = None
         error: Optional[str] = None
         latency_ms: Optional[float] = None
 
         try:
-            result = self._bridge.interact(user_text=text, mode=mode, profile=profile)
+            result = self._bridge.interact(user_text=text, mode=mode, profile=profile, memory=memory)
             latency_ms = self._bridge.last_latency_ms
         except Exception as exc:
             error = str(exc)
