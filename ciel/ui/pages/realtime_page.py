@@ -28,10 +28,7 @@ from ..engine_bridge import EngineBridge
 from ..settings_store import save_settings
 from ..utils import dig
 
-try:
-    import cv2
-except Exception:
-    cv2 = None
+cv2 = None
 
 try:
     import sounddevice as sd
@@ -145,9 +142,15 @@ class RealtimePage(QWidget):
         self.tensor_buffer.clear()
 
     def toggle_camera(self) -> None:
+        global cv2
+
         if cv2 is None:
-            self.video_label.setText("Camera requires opencv-python")
-            return
+            try:
+                import cv2 as _cv2
+            except Exception:
+                self.video_label.setText("Camera requires opencv-python")
+                return
+            cv2 = _cv2
 
         if self._cap is not None:
             try:

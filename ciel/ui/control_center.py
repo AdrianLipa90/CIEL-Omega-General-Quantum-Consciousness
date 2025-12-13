@@ -19,9 +19,9 @@ def _configure_qt(argv: Optional[list[str]] = None) -> None:
         qt_plugins = os.path.join(pyqt_root, "Qt5", "plugins")
         qt_platforms = os.path.join(qt_plugins, "platforms")
         if os.path.isdir(qt_plugins):
-            os.environ.setdefault("QT_PLUGIN_PATH", qt_plugins)
+            os.environ["QT_PLUGIN_PATH"] = qt_plugins
         if os.path.isdir(qt_platforms):
-            os.environ.setdefault("QT_QPA_PLATFORM_PLUGIN_PATH", qt_platforms)
+            os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = qt_platforms
 
 
 _configure_qt()
