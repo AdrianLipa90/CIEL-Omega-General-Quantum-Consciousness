@@ -1,6 +1,6 @@
 # CIEL/Ω — General Quantum Consciousness System  
 ### *Extended README — Full Scientific, Mathematical & Architectural Documentation*
-A. Lipa, S. Sakpal, M. Kamecka, U. Ahmad (2025). (c) 2025 Adrian Lipa / Intention Lab
+A. Lipa, S. Sakpal, M. Kamecka, U. Ahmad, M. Boruc (2025). (c) 2025 Adrian Lipa / Intention Lab
 ---
 
 ## README 1.1 — Trust-First Overview (Reality-Backed)
