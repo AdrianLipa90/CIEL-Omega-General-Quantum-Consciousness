@@ -2,6 +2,15 @@
 ### *Extended README — Full Scientific, Mathematical & Architectural Documentation*
 A. Lipa, S. Sakpal, M. Kamecka, U. Ahmad (2025). (c) 2025 Adrian Lipa / Intention Lab
 ---
+This repository organizes the uploaded CIEL project drafts into a coherent Python package layout. Production modules now live in first-party packages; the historic drops remain preserved under ext/ for reference but are no longer imported or distributed.
+
+The spectral Fourier kernel is published as `ciel_wave` (renamed from the legacy local `wave` package) to avoid clashing with Python’s standard library module of the same name. Use imports such as `from ciel_wave.fourier_kernel import SpectralWaveField12D` in code and tests.
+
+No placeholders were added to the active code.
+All runtime packages expose deterministic, well tested behaviour.
+Hyphens were normalized to underscores in module filenames.
+Tests verify imports, pipelines and persistence.
+Source provenance: the ext/ directory contains the raw batch extensions (Ext1 … Ext21, FWCKU, Emot, kernels, paradox notes). They stay untouched as archival material. The Python package published by setup.py excludes those modules and instead uses the curated equivalents under bio/, emotion/, fields/, memory/, integration/, etc.
 
 ## README 1.1 — Trust-First Overview (Reality-Backed)
 
